@@ -1,0 +1,25 @@
+# Real clinic data: never commit
+data/*
+!data/.gitkeep
+*.xlsx
+*.xls
+
+# Secrets
+.env
+.env.*
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
