@@ -12,10 +12,21 @@ The working demo of the design in `docs/demo-plan.md`. Nothing is built yet. Thi
 
 No real patient data goes in this folder. Real clinic files stay in git-ignored `data/`.
 
-## Two kinds of credits
+## Credits
 
 1. **Build credits:** Claude Code usage to write the app. This is what the tiers below are sized by.
-2. **Run credits:** an API key for the AI features when the demo runs (reading a register page, drafting a review, answering a question). Each call is cheap, and a demo uses a few dozen. Every AI feature also has a canned fallback, so the demo still works with no key.
+2. **Run credits:** an API key for the AI features when the demo runs. **We have none for now.** Until we find a source, every AI feature appears in the app as a **"Coming soon"** card that describes what it will do. Everything else works fully.
+
+### AI features shown as "Coming soon"
+
+| Feature | What the card says it will do |
+| --- | --- |
+| Snap the register | Photograph a register page and AI reads the handwriting (English and Hindi) into a table, highlights entries it is unsure about, and exports to Excel. Old registers can be backfilled so trends work from day one |
+| Review writing help | Turns the patient's own star rating, tags and words into a short review in English, Hindi or Hinglish, which they can edit before posting |
+| Ask about your clinic | Answers questions like "Why were new patients down in October?" from the clinic's own numbers, in the app or by replying to the weekly WhatsApp summary |
+| Written weekly summary | Explains in plain language what changed this week and why. Until then the summary uses fixed templates |
+
+Where run credits might come from: IIITD-IC or the advisor (research or startup credit programs), or a free tier of a model provider. To find out.
 
 ## Build tiers
 
@@ -27,13 +38,13 @@ What we need for the professor. Covers the three ideas the team liked most.
 
 | Piece | What it does |
 | --- | --- |
-| Review helper (patient page) | Stars and tags or free text, optional AI draft in English, Hindi or Hinglish, one-tap copy, buttons that open Google, Practo or Justdial |
-| Snap the register | Upload a photo of a register page, AI reads it into an editable table with unsure cells highlighted, download as Excel |
+| Review helper (patient page) | Stars and tags or free text, one-tap copy, buttons that open Google, Practo or Justdial. AI drafting shows as "Coming soon" |
+| Snap the register | "Coming soon" screen describing the feature, with a sample of the table it will produce |
 | Home, "This week" | New patients vs usual, where they came from, up to three nudges, on synthetic data |
 | Due list | Vaccines and tests due, each with a prefilled WhatsApp reminder in the clinic's name |
 | Synthetic data | Generator for a 3-year pediatric clinic with planted patterns (Google drop, vaccine wave, monsoon peak) |
 
-Demo story it supports: snap register, see the drop in new patients, play the patient writing a review, send a vaccine reminder.
+Demo story it supports: show the register-reading feature that's coming, see the drop in new patients, play the patient writing a review, send a vaccine reminder.
 
 ### Tier 2: full story
 
@@ -50,7 +61,7 @@ Demo story it supports: snap register, see the drop in new patients, play the pa
 
 | Piece | What it does |
 | --- | --- |
-| Ask about your clinic | Chat with suggested questions, answered from aggregate numbers |
+| Ask about your clinic | "Coming soon" until we have run credits; then chat with suggested questions, answered from aggregate numbers |
 | Settings | Doctor's own reminder rules ("TSH every 6 months"), earnings on or off, printable QR codes |
 | Vaccine stock forecast | Doses needed next month from the due list |
 | Deploy and polish | Public link, mobile layout pass, demo reset button |
@@ -72,5 +83,5 @@ Build order inside Tier 1: review helper, then snap the register, then synthetic
 ## Waiting on
 
 - [ ] Tier choice, after checking Parth's credits.
-- [ ] An API key for the run credits, or a decision to demo with canned AI answers.
+- [ ] A source of run credits for the AI features. Until then they show as "Coming soon".
 - [ ] 3 to 4 handwritten sample register pages with fake patients, ideally in the clinic's real register format.

@@ -154,7 +154,8 @@ Full plan: `docs/next-semester-plan.md`. Goal: move from "doctors say they want 
 ## Open questions
 
 - [ ] Work split between Parth and Garvit (state in report).
-- [ ] MVP tech stack. Proposed: Vite + React + TypeScript, client-side only, static deploy (see `docs/demo-plan.md`).
+- [ ] MVP tech stack. Proposed: Vite + React + TypeScript, client-side only, static deploy (see `app/README.md`).
+- [ ] Where to get API credits for the AI features. None for now: AI features show as "Coming soon" cards that describe what they will do.
 - [ ] What exactly is in the clinic's Excel files; can visit-level data be exported from Axon EMR?
 - [ ] Privacy: names removed before data leaves the clinic; keep India's DPDP Act in mind.
 
