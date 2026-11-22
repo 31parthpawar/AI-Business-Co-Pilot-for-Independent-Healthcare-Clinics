@@ -10,7 +10,10 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 - Questionnaire closed for analysis at **66 responses** (target was 25 to 30). Full analysis in `research/findings.md`.
 - Met Prof. Vajpayee on 21 Nov to discuss the responses.
 - **The growth monitor is validated** (89% find it useful), but three findings conflict with earlier MVP decisions. These are open until agreed with the advisor (see "Open decisions" below).
-- Next: settle the open decisions, build the MVP, write the report.
+- **Current goals:**
+  1. Build the demo app for Prof. Vajpayee and the report, per `docs/demo-plan.md`.
+  2. Set next semester's approach, per `docs/next-semester-plan.md`.
+  3. Settle the open decisions and write the report.
 
 ## Project basics
 
@@ -83,6 +86,8 @@ Business areas he flagged for a clinic: USP, local demographics, customers' payi
 
 He asked us to research before building, use a questionnaire, and narrow the target to small specialist clinics practicing 5+ years. His caution: doctors won't share finances because payments are mostly cash.
 
+His suggestion (Nov 2026, after the survey): sell the product to chemists and nearby stores rather than to doctors themselves. An idea, not a decision. It is tested next semester as one of three payer models (`docs/next-semester-plan.md`); the survey has no data on it yet.
+
 ## Proposed solution
 
 A growth monitor that tracks a clinic's key metrics from patient and visit data and shows clearly what is changing.
@@ -101,7 +106,7 @@ What the survey suggests changing (pending advisor agreement):
 
 ## MVP prototype
 
-Working prototype on the first clinic's real (anonymized) data.
+Working prototype on synthetic data modeled on the first clinic, then its real (anonymized) data. Full design, screens, nudge rules and demo script: `docs/demo-plan.md`.
 
 **Metrics, from Q17 top picks:** where new patients come from, which patients stopped coming, monthly visit trends, which marketing is working, services used most. Comparison with similar clinics and busy months can wait.
 
@@ -110,9 +115,11 @@ Core flow:
 1. **Data in:** receptionist entry and/or file import (Excel or EMR export), patient names replaced by IDs. No financial data needed.
 2. **Metrics:** the five above.
 3. **Changes:** plain-language summary of what moved, e.g. "new patients from Google fell 30% this quarter".
-4. **Nudges (pending advisor):** simple rule-based actions, e.g. "18 patients haven't visited in 6 months".
-5. **Ask:** chat box for questions about the clinic's own numbers.
-6. **Optional earnings view.**
+4. **Nudges (pending advisor, behind a toggle):** simple rule-based actions, e.g. "18 patients haven't visited in 6 months".
+5. **Call back:** lapsed patients and vaccines due, with prefilled WhatsApp reminders.
+6. **Weekly digest:** insights pushed to the doctor, since 59% spend under 2 hours a week on business work.
+7. **Ask:** chat box for questions about the clinic's own numbers, with suggested questions.
+8. **Optional earnings view.**
 
 Out of scope this semester: general growth recommendations, live EMR integration, multi-clinic support, benchmarking, mobile app, appointment booking.
 
@@ -127,9 +134,16 @@ Out of scope this semester: general growth recommendations, live EMR integration
 
 End with next semester's plan. BTP rules: institute LaTeX template with "Entrepreneurship" on the title page; poster presentation; joint BTP states work division, both present (up to 1 hour), evaluated individually; committee of three, advisor's grade double-weighted on disagreement; second semester opens with a review of this one.
 
-## Roadmap (Winter 2027 candidates)
+## Next semester (Winter 2027)
 
-Wider validation across specialties and cities (add location question); pilots with doctors from the network; appointment reminders and follow-ups; proactive alerts; fee-based revenue estimates (fee list × visits); data kept on the doctor's device; growth recommendations; benchmarking; business plan with possible IIITD-IC support; possible parent-facing app.
+Full plan: `docs/next-semester-plan.md`. Goal: move from "doctors say they want it" to "a clinic uses it every week, and we know who pays".
+
+1. 6-week pilot at the first clinic with usage metrics (Jan to Feb).
+2. Who pays: doctor subscription vs chemist or nearby store (advisor's suggestion) vs clinic pharmacy. Chemist and doctor interviews; NMC and DPDP checks (Jan to Feb).
+3. 3 to 5 more clinics matching the likely-buyer profile, with a paid commitment test (March).
+4. Survey v2: location question, enforced pick limits, more specialties.
+5. Product features chosen by the pilot: WhatsApp reminders, EMR import, appointments (in or out), alerts, revenue estimate, benchmarking.
+6. Business plan and IIITD-IC pitch (March to April).
 
 ## Open decisions (take to Prof. Vajpayee)
 
@@ -138,11 +152,12 @@ Wider validation across specialties and cities (add location question); pilots w
 - [ ] How does data get in: receptionist entry, EMR export, or both?
 - [ ] Is the sample good enough, or widen it next semester?
 - [ ] Appointments and reminders: next semester, or a separate product?
+- [ ] Who pays: doctors, or chemists and nearby stores (his suggestion)? Plan is to test both next semester.
 
 ## Open questions
 
 - [ ] Work split between Parth and Garvit (state in report).
-- [ ] MVP tech stack (buildable in 1 to 2 days).
+- [ ] MVP tech stack. Proposed: Vite + React + TypeScript, client-side only, static deploy (see `docs/demo-plan.md`).
 - [ ] What exactly is in the clinic's Excel files; can visit-level data be exported from Axon EMR?
 - [ ] Privacy: names removed before data leaves the clinic; keep India's DPDP Act in mind.
 

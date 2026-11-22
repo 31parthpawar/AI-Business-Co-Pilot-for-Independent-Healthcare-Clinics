@@ -4,6 +4,8 @@ Newest first. Each entry: date, decision, reason. Add an entry whenever a direct
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 2026-11-22 | Current goals set: build the demo app (`docs/demo-plan.md`) and plan next semester (`docs/next-semester-plan.md`) | Survey done; the report needs a demo and a next-semester plan |
+| 2026-11-22 | Advisor's suggestion recorded: sell to chemists and nearby stores rather than doctors. Treated as a hypothesis to test next semester, not adopted | No evidence yet; needs chemist interviews and NMC/DPDP checks |
 | 2026-11-22 | Survey analysed (66 responses): growth monitor validated (89% find it useful). Three earlier decisions put under review pending advisor: suggestions in MVP (65% want them), lead with patient acquisition (48% top pain), data input beyond Excel (68% use paper) | See `research/findings.md` |
 | 2026-11-22 | Earlier "AI gap vs ChatGPT" positioning dropped | 79% of doctors never use AI tools for business; the real competitor is gut feel and paper |
 | 2026-11-22 | `docs/questionnaire.md` corrected to the live form (20 questions, no location question) | The location question was drafted but never added to the live form |
