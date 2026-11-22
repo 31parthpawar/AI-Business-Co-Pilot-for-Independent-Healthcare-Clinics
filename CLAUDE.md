@@ -66,8 +66,12 @@ Full detail in `research/findings.md`. Question numbers follow the live form (20
 - **Data sharing (Q18):** appointment records 64%, visit counts 61%, services used 42%, earnings 39%, none 12%.
 - **Pricing (Q19):** free only 24%, up to ₹500 33%, ₹500 to ₹1,500 29%, above ₹1,500 14%.
 - **Open answers (Q20):** more patients and reach (11 of 41), appointments, reminders and follow-up (7), records and admin (6), marketing that works today (5).
+- **Acquisition pain sits with flat practices:** 64% of flat practices name getting new patients, vs 28% of growing ones. Of the 32 who name it, 20 do no active promotion.
+- **Likely first buyers:** 10 to 20 years in practice (20 of 21 find it useful, 1 wants it free), 2+ hours a week on business work, EMR users (11% want it free vs 34% without EMR), 20+ patients a day.
+- **Skeptics:** 6 of the 7 "not useful" answers come from doctors practicing 20+ years, mostly the same ones who would share no data.
+- **Google profile is the one channel that visibly pays off:** 19 of 25 who use it get patients from Google, vs 5 of 41 who don't (correlation).
 
-Sample caveat: convenience sample through one doctor's network, 73% pediatrics, 80% practicing 10+ years. Strong signal for experienced pediatricians, weaker for other specialties. No location data.
+Sample caveat: convenience sample through one doctor's network, 73% pediatrics, 80% practicing 10+ years. Strong signal for experienced pediatricians, weaker for other specialties. No location data. The form didn't enforce "pick up to N" (11 doctors ticked more than 3 in Q17); rankings hold without them. 5 respondents appear to run larger setups (NICU, admissions). Willingness to pay is self-reported and barely varies with how useful doctors rate the tool.
 
 Hypotheses: confirmed (new patients top pain, gut-driven decisions, little deliberate marketing, earnings shared least); refuted (patients not returning as a stated pain, doctors already using AI tools); mixed (visibility: 58% say they track earnings, only 20% know return rate).
 

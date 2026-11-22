@@ -1,6 +1,7 @@
 # Survey analysis: python3 research/analyze.py research/responses.csv
 # Prints counts for all respondents and the 5+ years target segment, cross-tabs and open answers.
 import sys, pandas as pd
+pd.set_option('display.width', 250); pd.set_option('display.max_columns', 20)
 df = pd.read_csv(sys.argv[1])
 C = list(df.columns)
 yrs = C[2]
@@ -26,6 +27,33 @@ for name, d in [('ALL', df), ('TARGET 5+ yrs', tgt)]:
         print(f'\n{C[i][:70]}')
         for k, v in sorted(r.items(), key=lambda x: -x[1]):
             print(f'  {v:3d} ({100*v/n:4.0f}%)  {k}')
+print('\n######## PICK LIMITS (form did not enforce them)')
+for i, lim in [(11, 2), (12, 2), (17, 3)]:
+    k = sum(df[C[i]].fillna('').str.contains(o, regex=False).astype(int) for o in OPTS[i])
+    ok = (k > 0) & (k <= lim)
+    print(f'Q{i}: {int((k > lim).sum())} ticked more than {lim}. Within limit (n={int(ok.sum())}):')
+    for o in OPTS[i]:
+        v = int(df[C[i]][ok].str.contains(o, regex=False).sum())
+        print(f'  {v:3d} ({100*v/ok.sum():4.0f}%)  {o}')
+print('\n######## SEGMENTS (all): n, very useful, free only, would pay 500+')
+s = lambda i: df[C[i]].fillna('').str.strip()
+emr = s(5).str.contains('EMR', regex=False)
+segs = {'10 to 20 yrs': s(2) == '10 to 20', 'More than 20 yrs': s(2) == 'More than 20',
+        '2+ hrs business work': s(6) != 'Under 2', 'Under 2 hrs': s(6) == 'Under 2',
+        'Uses EMR': emr, 'No EMR': ~emr, '20+ patients/day': s(3) != 'Under 20', 'Under 20/day': s(3) == 'Under 20'}
+p500 = s(19).isin(['₹500 to ₹1,500', '₹1,500 to ₹3,000', 'More than ₹3,000'])
+for name, g in segs.items():
+    print(f'  {name:22s} n={int(g.sum()):2d}  very={int((g & (s(16) == "Very useful")).sum()):2d}  free={int((g & (s(19) == "Nothing, only if free")).sum()):2d}  pay500+={int((g & p500).sum()):2d}')
+print('\n######## CROSS-TABS (all)')
+for a, b in [(16, 19), (15, 16), (10, 16), (9, 7), (9, 14), (2, 16), (11, 10)]:
+    if b == 10:
+        g = s(11).str.contains('Getting new patients', regex=False)
+        print(pd.crosstab(s(10), g.rename('Getting new patients a top challenge')), '\n')
+        continue
+    print(pd.crosstab(s(a), s(b)), '\n')
+print('Q11 getting new patients & no promotion:', int((s(11).str.contains('Getting new patients') & s(13).str.contains('Nothing')).sum()))
+gp = s(13).str.contains('Google'); gs = s(12).str.contains('Google')
+print('Google profile users with Google patients:', int((gp & gs).sum()), 'of', int(gp.sum()), '| non-users:', int((~gp & gs).sum()), 'of', int((~gp).sum()))
 print('\n######## CROSS-TABS (target)')
 print(pd.crosstab(tgt[C[16]], tgt[C[19]]))
 print(pd.crosstab(tgt[C[16]], tgt[C[14]]))
