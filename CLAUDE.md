@@ -99,9 +99,10 @@ What the survey suggests changing (pending advisor agreement):
 | Positioning | Better than generic AI tools | The competitor is gut feel and a paper register. "Your clinic's numbers, finally visible" |
 | Lead problem | Visibility into business metrics | Getting new patients first; lapsed patients as the hidden second problem |
 | Suggestions | Deferred past the MVP | Add a few rule-based nudges tied to specific metrics, no general growth advice |
-| Data input | Excel upload | Quick receptionist entry (under 2 minutes a day) plus EMR export import |
-| Retention | One of several metrics | Lapsed patient list plus reminder messages |
-| Patient source | One of several metrics | One-tap "how did you hear about us" at the first visit, since almost no clinic records it |
+| Data input | Excel upload | Snap the paper register (AI reads it), backfill past registers, plus EMR or Excel import |
+| Retention | One of several metrics | Health-due reminders (vaccines, tests, growth checks) in the clinic's name, not "come back" messages, since people visit only when ill |
+| Patient source | One of several metrics | Source letter in the register, patient self check-in QR, tagged recommend links |
+| Getting found | Not planned | Review QR with optional AI help that sends patients to Google, Practo or Justdial; shareable recommend card |
 | Earnings | Optional | Keep optional, offer it openly |
 
 ## MVP prototype
@@ -110,16 +111,12 @@ Working prototype on synthetic data modeled on the first clinic, then its real (
 
 **Metrics, from Q17 top picks:** where new patients come from, which patients stopped coming, monthly visit trends, which marketing is working, services used most. Comparison with similar clinics and busy months can wait.
 
-Core flow:
+Four parts (v2 design, pending approval):
 
-1. **Data in:** receptionist entry and/or file import (Excel or EMR export), patient names replaced by IDs. No financial data needed.
-2. **Metrics:** the five above.
-3. **Changes:** plain-language summary of what moved, e.g. "new patients from Google fell 30% this quarter".
-4. **Nudges (pending advisor, behind a toggle):** simple rule-based actions, e.g. "18 patients haven't visited in 6 months".
-5. **Call back:** lapsed patients and vaccines due, with prefilled WhatsApp reminders.
-6. **Weekly digest:** insights pushed to the doctor, since 59% spend under 2 hours a week on business work.
-7. **Ask:** chat box for questions about the clinic's own numbers, with suggested questions.
-8. **Optional earnings view.**
+1. **Capture:** snap the paper register (AI reads handwriting into a table), backfill old registers, patient self check-in QR, file import. Names replaced by IDs. No financial data needed.
+2. **Stay in touch:** health-due reminders set by the doctor (vaccines, tests, growth checks, renewals), seasonal advisories, vaccine stock forecast.
+3. **Get found:** review QR with optional AI drafting and one-tap copy to Google, Practo or Justdial (no review gating); tagged recommend links to measure word of mouth.
+4. **Understand:** weekly WhatsApp summary, rule-based nudges (pending advisor, behind a toggle), "Ask about your clinic", trends. Optional earnings view.
 
 Out of scope this semester: general growth recommendations, live EMR integration, multi-clinic support, benchmarking, mobile app, appointment booking.
 

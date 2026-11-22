@@ -33,7 +33,7 @@ Three models to compare.
 
 **The chemist idea, as given:** sell the product to chemists and nearby stores rather than to doctors. Recorded as a suggestion to test, not a decision. Two readings, to test separately:
 
-- **Chemist as payer or channel:** a chemist next to a clinic sponsors the tool for the doctor, because more patients and recalled patients mean more prescriptions filled next door.
+- **Chemist as payer or channel:** a chemist or lab next to a clinic sponsors the tool for the doctor, because more patients mean more prescriptions filled next door. Health-due reminders for blood tests are a natural link to a partner lab.
 - **Chemist as customer:** chemists and other small stores have the same problem (repeat customers, footfall, knowing what sells) and usually keep digital billing already, which avoids the paper-record problem (68% of clinics use paper). This fits the long-term plan to reach other small service businesses.
 
 To test it:
@@ -56,7 +56,7 @@ Bring in 3 to 5 more clinics that match the likely-buyer profile: 10 to 20 years
 
 Candidates, ordered by evidence; the pilot decides what gets built.
 
-1. Automated WhatsApp reminders through the Business API (lapsed patients, vaccines due, membership renewals).
+1. Automated health-due reminders through the WhatsApp Business API (vaccines, tests, renewals), sent as service messages.
 2. EMR import (Axon first), since EMR users are the likelier payers.
 3. Appointment booking and reminders: 17% of open answers asked for it unprompted. Decide whether it belongs in this product or a separate one.
 4. Proactive alerts and a richer weekly digest.

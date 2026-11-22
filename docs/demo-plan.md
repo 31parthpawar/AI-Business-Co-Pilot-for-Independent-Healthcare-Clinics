@@ -1,107 +1,153 @@
 # Demo App Plan
 
-**Goal:** a working web app to show Prof. Vajpayee and put in the report (screenshots), ready by 24 Nov 2026. It runs on synthetic data modeled on the first clinic, and switches to the clinic's real, anonymized data once we have it.
+**Goal:** a working web app to show Prof. Vajpayee and put in the report (screenshots). Design first; it runs on synthetic data for the demo, and real clinic data comes later.
 
-**Status:** proposed, pending team approval. Items marked *(open decision)* can be switched on or off, so either answer from the advisor is cheap to adopt.
+**Status:** v2 design, pending team approval. Items marked *(open decision)* can be switched on or off, so either answer from the advisor is cheap to adopt.
+
+## What changed from v1
+
+| v1 idea | Problem | v2 |
+| --- | --- | --- |
+| Remind lapsed patients to visit | People see a doctor when they are ill. "Come back" reminders feel like spam and don't match how care works (Garvit's point) | **Health-due reminders:** vaccines, routine blood tests, growth checks, sent in the clinic's name. They keep the clinic in front of the family even when the action happens at a lab, so the clinic is the first call when someone falls ill |
+| Receptionist types every visit | Still a new daily chore. 68% of clinics keep paper registers and won't change habits | **Snap the register:** photograph the day's register page; AI reads it into a table. The register stays as it is |
+| "Request a Google review" link | Patients don't know what to write, and leave | **Review QR:** patient scans a QR at reception, picks or writes a few points, optionally gets AI help, copies the text in one tap and is taken to Google, Practo or Justdial |
+| "How did you hear about us" asked by receptionist | Gets skipped when the clinic is busy | **Patient self check-in QR** and **recommend links** capture the source without staff effort |
 
 ## The problems it has to address
 
 Ranked by survey evidence (`research/findings.md`).
 
-| Problem | Evidence | What the demo does about it |
+| Problem | Evidence | What the app does |
 | --- | --- | --- |
-| Getting new patients | Top challenge, 48%; "where new patients come from" 53% in Q17 | Shows where new patients come from, flags when a source drops, and prompts for Google reviews |
-| Retention nobody sees | 97% don't follow up regularly; 80% don't clearly know their return rate | Lists the patients to call back (lapsed patients and vaccines due), with a one-tap WhatsApp reminder |
-| Marketing that doesn't happen | 56% do no promotion; Google profile users get Google patients far more often (19 of 25 vs 5 of 41) | Small, specific actions instead of general marketing advice |
-| Decisions on gut feel | 65% | The clinic's numbers in plain language: what changed and why |
-| Wants suggestions | Most wanted feature, 65% (60% within the pick limit) | Rule-based nudges, each tied to a number *(open decision)* |
+| Getting new patients | Top challenge, 48%; "where new patients come from" 53% in Q17 | Review QR, recommend links, source tracking |
+| Word of mouth is everything but invisible | 91% get patients by word of mouth; nobody measures it | Recommend links make word of mouth countable and easier to spread |
+| Marketing that doesn't happen | 56% do no promotion; Google profile users get Google patients far more often (19 of 25 vs 5 of 41) | Reviews and recommendations that run themselves; no campaigns to plan |
+| Staying in touch | 97% don't follow up regularly; 80% don't clearly know return rate | Health-due reminders in the clinic's name |
+| Paper records | 68% paper, 11% Excel | Snap the register |
+| Decisions on gut feel | 65% | Plain-language weekly summary of what changed and why |
+| Wants suggestions | Most wanted feature, 65% (60% within the pick limit) | Rule-based nudges tied to a number *(open decision)* |
 
 ## Design principles
 
-Each one comes from a survey finding.
+1. **The app does the work, not the doctor.** 59% spend under 2 hours a week on business work. Capture, reminders and reviews run on their own; the doctor reads one weekly summary.
+2. **Fit existing habits.** Keep the paper register (snap it); use WhatsApp, which everyone already has.
+3. **AI in the background, not in the pitch.** 79% have never used AI tools for business. AI reads registers, drafts reviews and answers questions, but the doctor never has to write a prompt.
+4. **Be useful to the patient, not promotional.** Reminders carry health value (vaccine due, test due), never "visit us". This also keeps us clear of rules on soliciting patients.
+5. **Show people and actions, not just rates.**
+6. **No finance needed.** Earnings are optional (39% would share).
+7. **Phone first.** For doctors, receptionists and patients.
 
-1. **Push, don't pull.** 59% spend under 2 hours a week on business work, and one doctor wrote "I already have it in my EMR software, but not using it". The home screen shows at most three things, and a weekly WhatsApp-style digest brings the insights to the doctor.
-2. **Lead with new patients.** It is the top pain, especially for flat practices (64% vs 28% for growing ones).
-3. **Show people, not rates.** A list of 18 named-by-ID patients to call is actionable; "return rate 41%" is not. Doctors who know their return rate are about twice as likely to follow up (7 of 13 vs 4 of 17).
-4. **Suggest narrowly.** Each nudge names a number and one action. No general growth advice: doctors asked for "things that actually work... rather than the old ideas of pamphlets".
-5. **Paper-friendly input.** 68% keep paper registers and only 11% use Excel. Receptionist entry takes under 2 minutes a day; file import serves EMR users, who are also the likelier payers (11% want it free vs 34% without EMR).
-6. **No finance needed.** Everything runs on visits. Earnings are optional (39% would share).
-7. **Don't sell it as AI.** 79% have never used AI tools for business. The chat box is called "Ask about your clinic" and comes with ready-made questions.
-8. **Phone first.** Doctors check it between patients; the receptionist may use a desktop.
+## The app in four parts
 
-## How the design evolved
+### 1. Capture: get data in without a new chore
 
-**v0, before the survey:** upload an Excel file, see a dashboard of metrics, ask questions in a chat box.
+- **Snap the register.** The receptionist photographs the register page at the end of the day. A vision model reads the rows (date, patient, age, phone, complaint, new or returning) into a table, and cells it is unsure about are highlighted for a quick check. Exports to Excel or feeds the app.
+  - **Backfill:** photograph the last 1 to 2 years of registers on day one, and the trends and lists work immediately instead of after months of entry. This solves the cold start.
+  - **Source code column:** the receptionist writes one letter beside a new patient (G Google, W word of mouth, R doctor referral, L walk-in). The reader picks it up. A rubber stamp could print the options on each page.
+- **Patient self check-in QR** *(optional)*: a new patient scans at reception and enters the child's name, date of birth, phone and how they heard about the clinic. This also records consent for WhatsApp messages.
+- **File import** for clinics with EMR software or Excel.
 
-Problems the survey exposed:
-- Excel upload fits 11% of clinics.
-- A dashboard waits to be opened, and doctors spend little time on business work.
-- Plain metrics don't say what to do, yet suggestions were the top request.
-- Patient source is barely recorded anywhere, so "where new patients come from" can't be computed from existing records.
-- An AI-first pitch means little to doctors who don't use AI.
+### 2. Stay in touch: health-due reminders
 
-**v1, after the survey:** quick receptionist entry with a one-tap "how did you hear about us", a call-back list, rule-based nudges, a weekly digest, and the chat box kept but secondary.
+- **The doctor sets the rules** in their own words, so the app never gives medical advice:
+  - vaccines from the clinic's schedule
+  - "TSH every 6 months for patients tagged thyroid"
+  - "growth check at 9, 12 and 18 months"
+  - annual membership renewals
+- **Messages say what is due, not "visit us".** Example: "Dr. Pawar's Clinic: Aarav's MMR second dose is due next week." The family may go to a lab or another place, but the clinic's name is the one they see.
+- **Seasonal advisories:** for example dengue season prevention tips before the monsoon peak the clinic saw last year.
+- **Vaccine stock forecast:** the due list tells the clinic how many doses of each vaccine it will need next month. 73% of clinics offer vaccinations.
+- **Demo:** a due list with prefilled WhatsApp messages (`wa.me` links). Automated sending comes later.
 
-**Demo cut:** v1 trimmed to what can be built in about two days and shown in five minutes. Real WhatsApp sending, logins and EMR integration are left out. The table below shows what each version has.
+### 3. Get found: reviews and word of mouth
 
-| Feature | v0 | v1 | Demo |
-| --- | --- | --- | --- |
-| Excel upload | Main input | One of two inputs | CSV import (sample file) |
-| Receptionist entry with patient source | No | Yes | Yes |
-| New-patient sources and trend | One metric | Lead screen | Yes |
-| Call-back list (lapsed and vaccines due) | No | Yes | Yes, with WhatsApp links |
-| Rule-based nudges | No | Yes *(open decision)* | Yes, behind a toggle |
-| Weekly digest | No | Yes | Preview screen |
-| Monthly trends, services used | Yes | Yes | Yes |
-| Chat about own numbers | Main pitch | Secondary | Yes, with suggested questions |
-| Earnings view | Optional | Optional | Toggle, estimated as fee × visits |
-| Busy months, benchmarking | Yes | Later | No (15% and 27% in Q17) |
+- **Review QR** (a standee at reception, plus a link in the after-visit message). The patient:
+  1. Picks a star rating and a few tags ("explains clearly", "short wait", "good with kids"), or writes freely.
+  2. Taps "help me write" if they want: AI turns their own points into a short review in English, Hindi or Hinglish, which they can edit.
+  3. Copies the text in one tap and picks Google, Practo or Justdial; the app opens that platform's review page.
+- **Rules it follows:** every patient is offered the public review, whatever rating they gave. There's no filtering of unhappy patients, no incentives, and the patient always posts it themselves. Google prohibits review gating and incentives, and the review must be the patient's own experience.
+- **Recommend links:** after a visit, the family gets a "Share Dr. Pawar's clinic" card with the clinic's address, map and timings to forward on WhatsApp. Each link is tagged, so the app can count new patients who came from a recommendation. This turns the 91% word-of-mouth channel into something measurable.
+- **Google profile check:** rating, review count and recent reviews compared with nearby clinics, using public data. This gives the comparison 27% asked for without anyone sharing data. *(later)*
 
-## Screens
+### 4. Understand: what's working
 
-1. **Home, "This week":** new patients this month vs the usual, the call-back count, and up to three nudges.
-2. **Add visit (receptionist):** patient ID or phone number, new or returning, service (consultation, vaccination, annual program), and, for new patients, "how did you hear about us" (word of mouth, Google, doctor referral, walk-in, other). Large tap targets, about 10 seconds per entry.
-3. **Call back:** patients due for a vaccine and patients not seen in 6+ months, each with a "Send reminder" button that opens a prefilled WhatsApp message.
-4. **New patients:** source mix over time, a flag when a source drops, and a "request Google review" link to send after a visit.
-5. **Trends:** monthly visits, services used most, annual program renewals.
-6. **Ask about your clinic:** chat with suggested questions ("Why were new patients down in October?").
-7. **Weekly digest:** a preview of the message the doctor would receive on WhatsApp.
-8. **Settings:** nudges on or off, earnings on or off (fee list), file import.
+- **Weekly summary on WhatsApp:** new patients and where they came from, reminders sent, reviews posted, plus up to three nudges.
+- **Ask about your clinic:** chat with ready-made questions, also answerable by replying to the WhatsApp summary.
+- **Where patients live:** a map of patients by area (from pin codes or locality), to decide where a camp or tie-up would reach new families. The advisor flagged local demographics. *(later)*
+- **Trends:** monthly visits, services used, seasonal peaks.
 
 ## Nudge rules (examples)
 
 | Trigger | Nudge |
 | --- | --- |
-| Patients last seen 6 to 12 months ago | "18 patients haven't visited in 6 months. Send them a reminder?" |
-| Vaccine due within 14 days | "9 children are due for vaccines this fortnight." |
+| Vaccines due in the next 14 days | "9 children are due for vaccines this fortnight. Send reminders?" |
 | New patients 20% below the 3-month average | "New patients fell 25% this month. Most of the drop is from Google." |
-| Few Google-sourced patients | "Only 3 new patients came from Google this month. Ask today's patients for a review." |
-| Source missing for many new patients | "Source wasn't recorded for 40% of new patients this week." |
-| Annual program memberships expiring | "6 annual memberships expire this month." |
-| A referring doctor sends fewer patients | "Referrals from Dr. A dropped from 8 to 2 this quarter." |
+| Few new reviews | "2 reviews this month vs 9 last month. Is the QR standee still at the desk?" |
+| Recommend links working | "6 new patients came from shared links this month." |
+| Source letter missing | "Source wasn't marked for 40% of new patients this week." |
+| Memberships expiring | "6 annual memberships expire this month." |
+| Seasonal peak ahead | "Visits rose 40% last September. Vaccine and staff planning?" |
 
-## Demo script (5 minutes)
+## AI pieces
 
-1. Monday morning at the clinic: the doctor opens the weekly digest on the phone.
-2. Home screen: new patients are down and Google is the cause, so the doctor sends a review request.
-3. Call back: 18 lapsed patients and 9 vaccines due, so the receptionist sends reminders.
-4. Receptionist adds a new patient in 10 seconds, including how they heard about the clinic.
-5. Ask: "Which months were slowest last year?"
-6. Close on the evidence: each screen maps to a survey number.
+| Feature | What AI does | Fallback if it fails |
+| --- | --- | --- |
+| Snap the register | Reads handwritten rows (English and Hindi), flags unsure cells | Manual correction in the review table |
+| Review helper | Turns the patient's own tags and words into a short review | Patient writes it themselves |
+| Ask about your clinic | Answers from aggregated numbers only | Ready-made answers to the suggested questions |
+| Weekly summary | Writes the plain-language "what changed" | Template text |
 
-## Data
+Privacy: register photos contain names and phone numbers. Process them, keep the extracted table on the clinic's device, replace names with IDs for analysis, and delete the photo. Get consent under the DPDP Act before messaging patients.
 
-- **Synthetic dataset:** a pediatric clinic over about 3 years with roughly 1,500 patients. Visits carry a service type, a patient source and a vaccine schedule. It includes deliberate patterns for the demo to find: a drop in Google-sourced patients, a group of lapsed patients, a monsoon peak and expiring annual memberships.
-- **Real data:** the first clinic's Excel and EMR exports, anonymized, kept in git-ignored `data/`. Never committed.
+## Screens
+
+**Clinic side (doctor and receptionist):**
+1. **Home, "This week":** headline numbers and up to three nudges.
+2. **Snap register:** camera, extracted table with highlighted cells, confirm.
+3. **Due list:** vaccines, tests, renewals; send reminders.
+4. **Get found:** reviews this month, recommend-link shares and new patients from them, source mix.
+5. **Trends.**
+6. **Ask about your clinic.**
+7. **Settings:** reminder rules, nudges on or off, earnings on or off, QR codes to print.
+
+**Patient side (opened from a QR or WhatsApp, no app install):**
+
+8. **Review helper.**
+9. **Self check-in.**
+10. **Recommend card.**
+
+## Demo script (6 minutes)
+
+1. Receptionist snaps a register page; rows appear in a table. "Two years of registers were backfilled like this."
+2. Home screen: new patients down, mostly from Google. Reviews have dried up.
+3. On a phone, play the patient: scan the QR, tap tags, get an AI-drafted Hinglish review, copy, land on Google.
+4. Due list: 9 vaccines due; send a WhatsApp reminder in the clinic's name.
+5. Recommend card forwarded on WhatsApp; it shows up later as a new patient "via shared link".
+6. Weekly summary on WhatsApp; reply with a question and get an answer.
+7. Close on the evidence: each screen maps to a survey number.
+
+## Build order for the demo
+
+1. Patient-side review helper (self-contained, the biggest wow).
+2. Snap register with sample handwritten pages we write ourselves.
+3. Home, due list and get-found screens on synthetic data.
+4. Weekly summary preview and Ask.
+5. Recommend card, check-in, trends, settings if time allows.
 
 ## Recommended tech
 
-- Vite, React and TypeScript with Tailwind and a chart library. Deployed as a static site (Vercel or GitHub Pages).
-- All data stays in the browser. No backend and no patient data leaving the device, which keeps us on the right side of the DPDP Act.
-- WhatsApp through `wa.me` links with prefilled text, so no API approval is needed.
-- Ask box: a language model call through a small serverless function that receives only aggregated numbers, never patient rows. Canned answers as a fallback so the demo works offline.
-- Why: buildable in 1 to 2 days, no infrastructure, and easy to change after the advisor's answers.
+- Vite, React and TypeScript with Tailwind and a chart library. Static deploy (Vercel).
+- A small serverless function calls a vision-capable language model for register reading, review drafting and Ask. No patient rows are sent to Ask; only aggregates.
+- Clinic data stays in the browser for the demo.
+- WhatsApp through `wa.me` links; QR codes generated in the app.
+
+## Checks before real use
+
+- **Messaging rules:** TRAI rules on commercial messages and WhatsApp Business message categories. Reminders should qualify as service messages, not marketing.
+- **Medical ethics:** NMC rules on doctors soliciting patients and advertising, which apply to reviews and recommend links.
+- **Review platforms:** Google and Practo review policies.
+- **Privacy:** DPDP Act consent for storing phone numbers and messaging.
 
 ## Out of scope for the demo
 
-Automated WhatsApp sending, live EMR integration, logins and multiple clinics, benchmarking, billing, appointment booking, and any view for chemists or partners. Appointments and reminders came up unprompted in 17% of open answers; they are tracked in `docs/next-semester-plan.md`.
+Automated WhatsApp sending, live EMR integration, logins and multiple clinics, Google profile comparison, the patient map, billing, appointment booking, and any view for chemists or labs.
