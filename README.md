@@ -12,8 +12,8 @@ Small clinic owners are doctors first, but growing the clinic forces them to thi
 | `docs/questionnaire.md` | Validation questionnaire sent to doctors |
 | `docs/decisions.md` | Log of decisions and why they were made |
 | `research/findings.md` | Survey findings from 66 doctors |
-| `research/responses.csv` | Anonymous survey responses |
-| `research/analyze.py` | Reproduces the numbers: `python3 research/analyze.py research/responses.csv` |
+| `research/responses.csv` | Anonymous survey responses (Google Form export, all 66, 18 to 20 Nov 2026) |
+| `research/analyze.py` | Reproduces every number in the findings, including segments and pick-limit checks: `python3 research/analyze.py research/responses.csv` |
 | `data/` | Real clinic data. Git-ignored, never committed |
 
 ## Working together
