@@ -13,6 +13,7 @@ Small clinic owners are doctors first, but growing the clinic forces them to thi
 | `docs/decisions.md` | Log of decisions and why they were made |
 | `docs/demo-plan.md` | Demo app design: screens, nudge rules, demo script, tech |
 | `docs/next-semester-plan.md` | Winter 2027 plan: pilots, who pays, wider validation |
+| `app/` | Demo app: build tiers and scope in `app/README.md` |
 | `research/findings.md` | Survey findings from 66 doctors |
 | `research/responses.csv` | Anonymous survey responses (Google Form export, all 66, 18 to 20 Nov 2026) |
 | `research/analyze.py` | Reproduces every number in the findings, including segments and pick-limit checks: `python3 research/analyze.py research/responses.csv` |
