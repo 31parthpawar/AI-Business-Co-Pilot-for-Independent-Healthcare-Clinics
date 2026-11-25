@@ -29,14 +29,14 @@ Five tables, all filled in by hand. Reference copies with headers only (all valu
 | Table | One row per | Reference |
 | --- | --- | --- |
 | Visit log | Patient visit | `docs/clinic-data/visit-log-fields.png` |
-| Annual program (AP) table | AP membership | Headers to come (see open questions) |
-| Vaccine table | Patient and vaccine | Headers to come (see open questions) |
+| Annual program (AP) table | AP purchase (new or renewal) | `docs/clinic-data/ap-table-fields.png` |
+| Vaccine table (in Axon EMR, to confirm) | Patient and vaccine | Headers to come (see open questions) |
 | Daily summary sheet | Session (morning or evening OPD) | `docs/clinic-data/daily-summary-fields.xlsx` |
 | 12-month summary sheet | Month | `docs/clinic-data/12-month-summary-fields.xlsx` |
 
-The doctor tracks each patient by **case number**: visits, services used, payment per visit, AP expiry and renewals, and vaccines due.
+The doctor tracks each patient by **case number**: visits, services used, payment per visit, AP expiry and renewals, and vaccines due. **Every child has their own case number**, so siblings have separate numbers. There is no family link.
 
-**Key finding:** the daily and 12-month sheets restate the visit log. The same visits are entered once per patient, then tallied by hand into about 26 columns per session (two sessions a day), then rolled up again by month. 20 of the 26 daily columns can be calculated from the visit log, AP table and vaccine table. The reference copies contain no formulas, so totals may be typed by hand (to confirm).
+**Key finding:** the daily and 12-month sheets restate the visit log. The same visits are entered once per patient, then tallied by hand into 26 columns per session (two sessions a day). The monthly and 12-month totals are Excel formulas over those tallies (the reference copies lost the formulas when values were removed). 20 of the 26 hand-tallied daily columns can be calculated from the visit log, AP table and vaccine table.
 
 ### 1. Visit log
 
@@ -55,20 +55,35 @@ The doctor tracks each patient by **case number**: visits, services used, paymen
 
 ### 2. AP table (annual program)
 
-The AP is a yearly membership: free consultations, discounted vaccines and other benefits. Fields the doctor keeps, as described to us (exact headers to come):
+The AP is a membership that runs **one year**. It gives the child **free consultations, discounted vaccine prices and free health checkups** for that year.
 
-- Case No.
-- AP start date (to confirm)
-- AP expiry date
-- Number of renewals
+Sheet title "ANNUAL PROGRAM", headers in row 2 (`ap-table-fields.png`):
+
+| Column | Header | Meaning | Notes |
+| --- | --- | --- | --- |
+| A | Count | Row number | Ignore |
+| B | Case No. | Patient ID | Joins to the visit log |
+| C | Name | Child's name | |
+| D | DOB | Date of birth | Only source of DOB we have |
+| E | Age | Age at purchase | Derivable from DOB |
+| F | Programe name | Which program | Values to confirm; there may be more than one program |
+| G | Buying | Assumed: new or renewal | To confirm |
+| H | Amount | Price paid | The AP price comes from here, so no price setting is needed |
+| I | Payment mode | Cash or online | Same values as the visit log's Mode (to confirm) |
+| J | Joining date | Membership start | |
+| K | Expiry Date | Membership end (start + 1 year) | |
+| L | (no header) | Unknown | To confirm |
+| M | Year | Membership year | |
+
+Assumed: each purchase (new or renewal) is one row. Then **renewal count** for a case number = number of earlier rows for that case number. To confirm.
 
 ### 3. Vaccine table
 
-Fields as described to us (exact headers to come):
+Kept in **Axon EMR** (to confirm), so the importer needs an export from Axon. It **stores due dates**, so the app doesn't need its own vaccine schedule to find overdue doses. Fields as described to us (exact headers to come):
 
 - Case No.
-- Vaccines given (name, date)
-- Vaccines due (name, due date, to confirm whether stored or worked out)
+- Vaccine given: name, date
+- Vaccine due: name, due date
 
 ### 4. Daily summary sheet (`daily-summary-fields.xlsx`)
 
@@ -88,7 +103,7 @@ Per-session columns and how the app gets each one. "Assumed" rules need the doct
 | E | Vac. Amount | Sum of Amount where service is vaccine |
 | F | Annual Programe sale | Sum of Amount where service is AP sale |
 | G | CASH payment | Sum of Amount where Mode is cash |
-| H | BANK payment | Sum of Amount where Mode is online or bank |
+| H | BANK payment | Sum of Amount where Mode is online (confirmed: "online" in the totals means online payment) |
 | I | Variable Expens | **Manual** |
 | J | Fixed Expens | **Manual** |
 | K | Vaccian used Cost | **Manual** |
@@ -100,10 +115,10 @@ Per-session columns and how the app gets each one. "Assumed" rules need the doct
 | Q | Exp | AP rows whose expiry date falls in the session's day |
 | R | Paid OPD Old pt. | OPD, Amount > 0, case number seen before |
 | S | Unpaid OPD pt. | OPD, Amount = 0 |
-| T | Unpaid online opd | OPD, online consult, Amount = 0 (assumed: "online" means teleconsult) |
+| T | Unpaid online opd | Unclear: OPD paid online, or an unpaid online consult. To confirm |
 | U | AP visit 1 | AP member's first visit in the membership (assumed) |
 | V | AP - Follow up | AP member's later visits (assumed) |
-| W | Online AP | AP member's online consults (assumed) |
+| W | Online AP | Unclear: AP sold with online payment, or an AP member's online consult. To confirm |
 | X | New OPD pt. | OPD where the case number has no earlier visit |
 | Y | AP Vac pt. | Vaccine visits by AP members |
 | Z | Old Vacc. Pt. | Vaccine visits by patients with an earlier vaccine visit |
@@ -127,22 +142,24 @@ Everything here is a monthly roll-up of the daily sheet, so the app calculates i
 
 - **Phone number:** needed before any WhatsApp reminder. Until then, call lists are for the receptionist to phone from the clinic's own records.
 - **How a new patient found the clinic:** this is the survey's top pain (getting new patients, 48%; "where new patients come from" 53% in Q17), and the MVP can't address it without the data. Proposal: one optional "Source" column for new case numbers, added during the pilot.
-- **Date of birth:** not needed for the MVP if the vaccine table stores due dates.
+- **Date of birth for non-members:** only the AP table has DOB. Not needed for the MVP, since the vaccine table stores due dates.
+- **Family link:** siblings have separate case numbers and nothing connects them, so every feature works per child.
 
 ## Data model
 
 Normalised from the tables above. Names are suggestions.
 
 ```
-Patient        case_no (key), name, first_visit_date (derived)
+Patient        case_no (key, one per child), name, dob? (from AP table), first_visit_date (derived)
 Visit          id, date, session (M|E), case_no, service (mapped category), detail,
                vaccines[] (parsed from detail), amount, mode (cash|online), remark
-Membership     case_no, start_date, expiry_date, renewal_count, price
-VaccineRecord  case_no, vaccine, given_date?, due_date?
+Membership     case_no, program_name, buying (new|renewal), amount, payment_mode,
+               joining_date, expiry_date, year; renewal_count derived from earlier rows
+VaccineRecord  case_no, vaccine, given_date?, due_date
 DailyManual    date, session, variable_exp, fixed_exp, vaccine_cost, supplier_bills{}, reviews
 CallOutcome    case_no, list, date, outcome (reached|not reached|booked|declined), note
-Settings       service_map, membership {name, price, duration_months}, targets,
-               thresholds, vaccine_schedule, earnings_on
+Settings       service_map, membership {name, duration_months (12), benefits}, targets,
+               thresholds, earnings_on
 ```
 
 Everything else is derived, never stored.
@@ -151,11 +168,11 @@ Everything else is derived, never stored.
 
 | ID | Piece | What it does |
 | --- | --- | --- |
-| B1 | Import | Read the visit log, AP table and vaccine table from Excel. Map columns and Service values through Settings. Show rows it couldn't read for a quick fix |
+| B1 | Import | Read the visit log and AP table from Excel, and the vaccine table from an Axon EMR export (Excel or CSV). Map columns and Service values through Settings. Show rows it couldn't read for a quick fix |
 | B2 | Automatic summaries | The 20 calculable daily columns by session, monthly totals, and the 12-month view (max, min, average, target, total), matching the doctor's layout |
 | B3 | Export | Write the daily and 12-month sheets back to Excel in his layout, so he loses nothing |
 | B4 | Manual daily form | The 6 manual items per session |
-| B5 | Settings | Service mapping, membership price and duration, targets, thresholds, vaccine schedule, earnings on or off |
+| B5 | Settings | Service mapping, membership duration and benefits, targets, thresholds, earnings on or off |
 
 ## The six features
 
@@ -178,7 +195,7 @@ Why: 97% of surveyed doctors don't follow up regularly with lapsed patients; "wh
 
 ### F2. Cross-sell to AP
 
-Patients who aren't AP members and whose spending in the last 12 months is at or above the AP price. Shows "would have saved ₹X with AP", using the visits they paid for that AP would have covered (rule set in Settings).
+Children who aren't AP members, ranked by what they paid in the last 12 months for things AP covers: consultations (free under AP) and vaccines (discounted under AP). Each row shows paid consultations, vaccine visits and the total, against the current AP price (latest Amount in the AP table). "Would have saved ₹X" = consultation fees paid + vaccine discount (discount rate in Settings, 0 until known). Per child, since siblings have separate case numbers.
 
 Why: the advisor flagged cross-selling.
 
@@ -267,7 +284,7 @@ Planted patterns, so each feature has something to find:
 - A monsoon peak; evenings busier than mornings.
 - A month running behind target.
 
-Vaccine due dates come from a simple configurable schedule in Settings. It is the doctor's schedule, not medical advice from the app.
+The synthetic vaccine table includes due dates, as the clinic's real one does (the generator can use any simple schedule to make them; the app itself never calculates vaccine schedules).
 
 ## Privacy
 
@@ -298,13 +315,25 @@ Vaccine due dates come from a simple configurable schedule in Settings. It is th
 6. Insights: how many new patients come back.
 7. Close: next is a 6-week pilot at the clinic.
 
-## Open questions for the clinic (blocking the importer)
+## Answered by the clinic (25 Nov)
 
-1. Screenshots of the **AP table** and **vaccine table** headers, like the visit log one.
-2. The exact values used in **Service**, **Detail** and **Mode**. How are several vaccines in one visit written?
-3. **AP price(s)**, duration (12 months?) and what it covers (which consults are free, vaccine discount).
-4. Does the vaccine table store **due dates**, or only vaccines given? Is it in Excel or Axon EMR, and can it be exported?
-5. Is the **case number** permanent per child? Do siblings get separate numbers?
-6. In the daily sheet, does **"online"** mean a teleconsult or an online payment? What exactly are AP visit 1, AP follow-up and Online AP?
-7. Are the daily and 12-month totals **typed by hand** or calculated with formulas?
-8. Are the default thresholds right: 30 days for renewals, 2× usual gap for lapsed, 0 or 1 visits in 6 months for unused AP?
+- AP: one year; free consultations, discounted vaccines, free health checkups. Price comes from the AP table, so it isn't needed up front.
+- One case number per child; siblings have separate numbers.
+- "Online" in the totals means online payment.
+- Monthly and 12-month totals are Excel formulas; the per-session tallies are typed by hand.
+- The vaccine table stores due dates and is probably in Axon EMR.
+- AP table headers: see section 2.
+
+## Open questions for the clinic
+
+**Blocking the importer:**
+
+1. **Vaccine table:** confirm it's in Axon EMR, whether Axon can export it to Excel or CSV, and a screenshot of its columns.
+2. The exact values used in the visit log's **Service**, **Detail** and **Mode**. How are several vaccines in one visit written?
+3. AP table: what goes in **Buying** (new or renewal?), what are the possible **Programe name** values, and what is the **unnamed column L**? Is each renewal a new row?
+
+**Not blocking:**
+
+4. Daily sheet columns **T (Unpaid online opd)** and **W (Online AP)**: online payment or online consult? What exactly are **AP visit 1** and **AP follow-up**?
+5. The **vaccine discount** under AP (a percentage, or per vaccine), for the cross-sell savings.
+6. Are the default thresholds right: 30 days for renewals, 2× usual gap for lapsed, 0 or 1 visits in 6 months for unused AP?

@@ -50,7 +50,7 @@ Clinic owners are doctors first, but growing the clinic forces them to think lik
 Our first clinic is **one example**, not proof that every clinic works the same way:
 
 - **Services:** consultations (booked and walk-in), vaccinations, and an annual health program (AP: yearly membership with free consultations, discounted vaccines, other benefits).
-- **Records:** Excel for most data including the annual program; Axon EMR for vaccines; appointments booked by phone and written in a paper diary. Patients are tracked by case number. Five hand-filled tables: a visit log, an AP table, a vaccine table, a daily summary sheet (two sessions a day) and a 12-month summary with monthly targets. The summary sheets restate the visit log: 20 of 26 daily columns can be calculated. Details: `docs/prototype-spec.md`.
+- **Records:** Excel for most data including the annual program; Axon EMR for vaccines (with due dates); appointments booked by phone and written in a paper diary. Patients are tracked by case number, one per child (siblings have separate numbers). Five hand-filled tables: a visit log, an AP table, a vaccine table, a daily summary sheet (two sessions a day) and a 12-month summary with monthly targets. The summary sheets restate the visit log: 20 of 26 daily columns can be calculated. Details: `docs/prototype-spec.md`.
 - **Staff:** a receptionist handles appointments, patient messages and admin.
 - **Business decisions:** the doctor reviews data himself and uses ChatGPT and Claude. The survey shows this is unusual: 79% of doctors have never used AI tools for business decisions.
 
@@ -156,7 +156,7 @@ Full plan: `docs/next-semester-plan.md`. Goal: move from "doctors say they want 
 
 ## Open questions
 
-- [ ] The clinic's data questions at the end of `docs/prototype-spec.md` (AP and vaccine table headers, Service values, AP price, case numbers). These block the importer.
+- [ ] The clinic's remaining data questions at the end of `docs/prototype-spec.md`: vaccine table export from Axon EMR, the values used in Service, Detail and Mode, and the AP table's Buying and Programe name columns. These block the importer.
 - [ ] Where to get API credits for the AI features next semester. Not needed for the MVP.
 - [ ] Privacy: real data stays on the clinic's computer; DPDP Act consent before any patient messaging.
 

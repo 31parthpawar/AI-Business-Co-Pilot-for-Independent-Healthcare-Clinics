@@ -4,6 +4,7 @@ Newest first. Each entry: date, decision, reason. Add an entry whenever a direct
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 2026-11-25 | Clinic answers recorded in `docs/prototype-spec.md`: AP lasts a year (free consultations, discounted vaccines, free checkups), price taken from the AP table; one case number per child; "online" means online payment; totals are formulas; vaccine due dates stored, probably in Axon EMR. App needs no vaccine schedule of its own | Answers from the doctor |
 | 2026-11-25 | Prototype built on the first clinic's exact data fields (visit log, AP table, vaccine table, daily and 12-month summary sheets); generalise after the pilot, with clinic specifics in Settings | Only real data we have; the doctor is committed. Only 11% of surveyed clinics use Excel, so this is the first clinic's answer, not the general one |
 | 2026-11-25 | MVP = base layer (import, automatic summaries, export) plus six features: who to call today, cross-sell to AP, patient value, retention, target pacing, session and seasonal load. Spec: `docs/prototype-spec.md` | Consolidating his sheets alone is what Excel formulas can do; the value is telling him who to act on. Covers advisor's CLV, cross-selling and resource management |
 | 2026-11-25 | Rule-based suggestions are in the MVP, as action lists and pacing tied to the clinic's numbers | Most wanted feature (65%); tell the advisor |
