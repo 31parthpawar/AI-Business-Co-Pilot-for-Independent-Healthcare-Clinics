@@ -11,6 +11,20 @@ No real clinic data in this folder or anywhere in the repo (it's public). Real f
   - **iPhone (Safari):** open the link, then Share > "Add to Home Screen". Install it rather than using a tab: Safari can clear a website's stored data after about a week without use, but home-screen apps keep it.
 - **Data stays on the device,** in the browser's storage (IndexedDB). Each phone or computer has its own copy; there is no sync yet.
 - **Phone first** for the doctor; wider screens get a fuller dashboard for the receptionist.
+- **Light, dark or auto** (follows the phone), switched from the header and remembered on each device.
+
+## AI features (coming soon)
+
+There are no API credits yet, so each AI feature shows what it will do and a **See a sample** view:
+
+| Feature | Where | Sample |
+| --- | --- | --- |
+| Post and carousel writer | Posts | Five hand-written posts: dengue carousel, 9-month check carousel, fever myths (English and Hindi), a clinic notice story |
+| Ask about your clinic | Dashboard | Answers built from the clinic's real numbers by fixed rules |
+| Weekly WhatsApp summary | Dashboard | This week's summary built from the clinic's numbers |
+| Read register photos | Data | A register page and the table the reader would extract |
+
+Posts follow the NMC guidelines (Oct 2026): health education and neutral clinic notices only; no offers, testimonials or "best" claims; every post says it's for information only, and the doctor approves it. A test checks the sample posts for banned wording.
 
 ## Run it
 
@@ -30,10 +44,11 @@ Installing to the home screen needs https, so it works once the app is deployed 
 
 | Screen | What it shows |
 | --- | --- |
-| Dashboard | Needs attention (rule-based, plain language), headline numbers, month against target, who to call, new patients by source, what changed, retention, busy months, busy sessions |
+| Dashboard | Needs attention (rule-based, plain language), headline numbers, month against target, who to call, new patients by source, what changed, retention, busy months, busy sessions; Ask about your clinic and the weekly WhatsApp summary (coming soon, with samples from the clinic's numbers) |
 | Calls | The five call lists, top 10 by priority, one-tap outcome (booked, reached, no answer, declined) |
 | Patients | Search by case number or name; patient card with visits, AP history, vaccines due, call outcomes |
-| Data | Load sample data, import the clinic's Excel or CSV, download sample sheets, Settings (targets, earnings switch, call-list rules) |
+| Posts | What to post this month (from the clinic's data and the season), the NMC rules every post follows, and the AI post and carousel writer (coming soon, with sample posts) |
+| Data | Load sample data, import the clinic's Excel or CSV, download sample sheets, Settings (clinic name and timings, targets, earnings switch, call-list rules), register photo reading (coming soon, with a sample) |
 
 ## Status against the spec
 

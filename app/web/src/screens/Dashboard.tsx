@@ -6,7 +6,8 @@ import type { CallLists } from '../logic/callLists'
 import { headline, pacing, retentionCohorts, sessionLoad, visitsByMonthAndYear } from '../logic/metrics'
 import { firstServiceMix, newPatientsByMonth, sourceCoverage, sourceShifts } from '../logic/newPatients'
 import { useApp } from '../store'
-import { Card, compactInr, Icon, inr, PaceMeter, pct, StatTile, ToneMark } from '../ui'
+import { askSamples, weeklySummarySample } from '../logic/aiSamples'
+import { Card, ComingSoon, compactInr, Icon, inr, PaceMeter, pct, StatTile, ToneMark } from '../ui'
 import type { Nav } from '../App'
 
 export const LIST_LABELS: Record<keyof CallLists, { title: string; short: string; why: string }> = {
@@ -150,10 +151,50 @@ export function Dashboard({ nav }: { nav: Nav }) {
         <LoadHeatmap data={m.load} />
       </Card>
 
+      <div className="grid gap-4 lg:grid-cols-2">
+        <ComingSoon
+          title="Ask about your clinic"
+          description="Type a question in plain words and get an answer from the clinic's own numbers, in the app or by replying on WhatsApp."
+          points={['Answers from the clinic’s data only, with the numbers shown', 'English, Hindi or Hinglish', 'Only totals are sent to the AI, never patient names']}
+          sampleTitle="Ask about your clinic"
+          sample={<AskSample qa={askSamples(ds, idx, settings, asOf)} />}
+        />
+        <ComingSoon
+          title="Weekly summary on WhatsApp"
+          description="Every Monday morning, the week in a few plain sentences: what changed, why, and who to call."
+          points={['Pushed to the doctor, so there is nothing to open', 'Explains the change, not just the number', 'Reply to it with a question']}
+          sampleTitle="Weekly summary"
+          sample={<WeeklySample text={weeklySummarySample(ds, idx, settings, asOf, lists, d.insights)} />}
+        />
+      </div>
+
       <p className="pb-2 text-center text-[12px] text-muted">
         {ds.kind === 'sample' ? 'Sample data: a made-up pediatric clinic. ' : ''}
         {idx.patients.size.toLocaleString('en-IN')} patients, {ds.visits.length.toLocaleString('en-IN')} visits. {settings.earningsOn ? `Collected this month: ${inr(h.revenue)}.` : 'Earnings are off (Settings).'}
       </p>
+    </div>
+  )
+}
+
+function AskSample({ qa }: { qa: { q: string; a: string }[] }) {
+  return (
+    <div className="space-y-4">
+      {qa.map((x) => (
+        <div key={x.q} className="space-y-2">
+          <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-md bg-accent px-3.5 py-2 text-[14px] text-white">{x.q}</div>
+          <div className="w-fit max-w-[92%] rounded-2xl rounded-bl-md bg-surface px-3.5 py-2.5 text-[14px] text-ink ring-1 ring-[var(--border)]">{x.a}</div>
+        </div>
+      ))}
+      <p className="text-[12px] text-muted">These answers use your real numbers, written by fixed rules. The AI version answers any question.</p>
+    </div>
+  )
+}
+
+function WeeklySample({ text }: { text: string }) {
+  return (
+    <div className="rounded-2xl p-3" style={{ background: 'color-mix(in srgb, var(--good) 10%, var(--page))' }}>
+      <div className="max-w-[94%] whitespace-pre-line rounded-2xl rounded-tl-md bg-surface px-3.5 py-2.5 text-[14px] leading-relaxed text-ink shadow-sm ring-1 ring-[var(--border)]">{text}</div>
+      <p className="mt-2 text-[12px] text-ink-2">Built from your numbers this week. The AI version writes it in plain sentences and can explain why.</p>
     </div>
   )
 }

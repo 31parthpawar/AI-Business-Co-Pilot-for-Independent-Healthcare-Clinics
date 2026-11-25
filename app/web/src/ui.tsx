@@ -61,7 +61,7 @@ export function ToneMark({ tone }: { tone: Tone }) {
   )
 }
 
-export type IconName = 'alert' | 'clock' | 'info' | 'check' | 'up' | 'down' | 'home' | 'phone' | 'users' | 'folder' | 'search' | 'chevron' | 'upload' | 'download' | 'x'
+export type IconName = 'alert' | 'clock' | 'info' | 'check' | 'up' | 'down' | 'home' | 'phone' | 'users' | 'folder' | 'search' | 'chevron' | 'upload' | 'download' | 'x' | 'sun' | 'moon' | 'auto' | 'sparkle' | 'image' | 'copy'
 export function Icon({ name, className = 'h-5 w-5' }: { name: IconName; className?: string }) {
   const p: Record<IconName, ReactNode> = {
     alert: <><path d="M12 9v4" /><path d="M12 17h.01" /><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></>,
@@ -79,6 +79,12 @@ export function Icon({ name, className = 'h-5 w-5' }: { name: IconName; classNam
     upload: <><path d="M12 15V4" /><path d="m7 9 5-5 5 5" /><path d="M5 20h14" /></>,
     download: <><path d="M12 4v11" /><path d="m7 10 5 5 5-5" /><path d="M5 20h14" /></>,
     x: <><path d="M6 6l12 12" /><path d="M18 6 6 18" /></>,
+    sun: <><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>,
+    moon: <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" />,
+    auto: <><circle cx="12" cy="12" r="9" /><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18" fill="currentColor" /></>,
+    sparkle: <><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z" /><path d="M19 16l.7 1.8L21.5 18.5l-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7Z" /></>,
+    image: <><rect x="3" y="4" width="18" height="16" rx="2" /><circle cx="9" cy="10" r="2" /><path d="m21 16-5-5-9 9" /></>,
+    copy: <><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" /></>,
   }
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
@@ -147,11 +153,85 @@ export function useTokens<T extends string>(names: readonly T[]): Record<T, stri
   }
   const [vals, setVals] = useState(read)
   useEffect(() => {
+    // Re-read when the phone's theme changes or the in-app switch sets data-theme.
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const on = () => setVals(read())
     mq.addEventListener('change', on)
-    return () => mq.removeEventListener('change', on)
+    const mo = new MutationObserver(on)
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => {
+      mq.removeEventListener('change', on)
+      mo.disconnect()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return vals
+}
+
+/** Bottom sheet on phones, centred dialog on wider screens. Closes on the button, backdrop or Escape. */
+export function Sheet({ title, subtitle, onClose, children }: { title: string; subtitle?: string; onClose: () => void; children: ReactNode }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
+    window.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [onClose])
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-label={title}>
+      <div className="absolute inset-0 bg-black/45" onClick={onClose} />
+      <div className="safe-bottom relative flex max-h-[92dvh] w-full flex-col rounded-t-3xl bg-page shadow-2xl sm:max-w-3xl sm:rounded-3xl">
+        <div className="flex items-start justify-between gap-3 border-b border-[var(--border)] px-5 py-4">
+          <div>
+            <div className="text-[16px] font-semibold text-ink">{title}</div>
+            {subtitle && <div className="mt-0.5 text-[13px] text-ink-2">{subtitle}</div>}
+          </div>
+          <button onClick={onClose} className="rounded-full p-1.5 text-ink-2 ring-1 ring-[var(--border)]" aria-label="Close">
+            <Icon name="x" className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="overflow-y-auto px-5 py-4">{children}</div>
+      </div>
+    </div>
+  )
+}
+
+/** A feature that needs AI (and API credits): what it will do, plus a sample of the output. */
+export function ComingSoon({ title, description, points, sampleTitle, sample, id }: { title: string; description: string; points: string[]; sampleTitle?: string; sample: ReactNode; id?: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <section id={id} className="rounded-2xl border border-dashed border-[var(--axis)] bg-surface p-4 sm:p-5">
+      <div className="flex items-start gap-3">
+        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent-ink">
+          <Icon name="sparkle" className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-[15px] font-semibold text-ink">{title}</h2>
+            <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-ink-2 ring-1 ring-[var(--border)]">Coming soon</span>
+          </div>
+          <p className="mt-1 text-[13px] text-ink-2">{description}</p>
+          <ul className="mt-2 space-y-1 text-[13px] text-ink-2">
+            {points.map((p) => (
+              <li key={p} className="flex gap-2">
+                <span className="mt-[3px] text-accent-ink"><Icon name="check" className="h-3.5 w-3.5" /></span>
+                {p}
+              </li>
+            ))}
+          </ul>
+          <button onClick={() => setOpen(true)} className="mt-3 inline-flex items-center gap-1.5 rounded-xl bg-accent px-3.5 py-2 text-[14px] font-medium text-white">
+            See a sample <Icon name="chevron" className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+      {open && (
+        <Sheet title={sampleTitle ?? `${title}: sample`} subtitle="A sample of what this will produce. Not generated live: it needs AI, which isn't switched on yet." onClose={() => setOpen(false)}>
+          {sample}
+        </Sheet>
+      )}
+    </section>
+  )
 }

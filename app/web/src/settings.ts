@@ -5,6 +5,7 @@ export const NOT_RECORDED = 'Not recorded'
 
 export const defaultSettings: Settings = {
   clinicName: 'Demo Pediatric Clinic',
+  clinicTimings: 'Mon to Sat 10 am to 1 pm, 5 to 8 pm · Sun 10 am to 1 pm',
   serviceMap: {
     opd: 'OPD',
     consultation: 'OPD',

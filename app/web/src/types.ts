@@ -70,6 +70,8 @@ export interface Targets {
 
 export interface Settings {
   clinicName: string
+  /** Shown at the end of posts. */
+  clinicTimings: string
   /** Raw Service value (lower case) to category. */
   serviceMap: Record<string, ServiceCat>
   /** Canonical patient sources, in display order. */

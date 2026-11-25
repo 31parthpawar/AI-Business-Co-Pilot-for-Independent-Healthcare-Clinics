@@ -4,6 +4,9 @@ Newest first. Each entry: date, decision, reason. Add an entry whenever a direct
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 2026-11-25 | Posts tab added: AI post and carousel writer as "Coming soon" with sample posts; topic ideas from the clinic's data work now. Health education plus neutral clinic notices (timings, vaccination mornings, closures) only | Marketing is a real need (33% name it a top challenge; 56% do no promotion). NMC guidelines (Oct 2026) allow health education but bar promotion, offers and testimonials. Content creation was set aside earlier for overlapping a family member's startup; Garvit confirmed bringing it back |
+| 2026-11-25 | Every AI feature without API credits shows "Coming soon", what it will do, and "See a sample" | Shows the full product in the demo without spending credits |
+| 2026-11-25 | Light, dark and auto (follow the phone) themes, chosen per device | Asked for both modes; doctors use phones in both |
 | 2026-11-25 | The MVP is an installable web app (PWA): one codebase for Android, iPhone and desktop, no app store, works offline, data in the browser on each device | Both platforms needed; a native app is too slow to build and ship by 9 Dec. On iPhone it must be added to the home screen so Safari doesn't clear its data |
 | 2026-11-25 | New patients: optional Source column (word or one letter) with the Remark as fallback; new and old patients told apart by case number order (to confirm with the clinic) | Survey's top pain (48%); the clinic records no source. Measuring only, no solicitation, so within NMC rules |
 | 2026-11-25 | Call lists show today's top 10 by priority, with the full list one tap away | On a 3-year clinic the full lists run to hundreds; a receptionist can call about 10 a day |

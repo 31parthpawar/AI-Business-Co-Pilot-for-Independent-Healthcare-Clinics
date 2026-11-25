@@ -133,3 +133,29 @@ describe('excel round trip', () => {
     expect(v[v.length - 1].date).toBe(dataset.visits[dataset.visits.length - 1].date)
   }, 30000)
 })
+
+describe('posts and AI samples', () => {
+  it('suggests topics from the data, including vaccines due and a clinic notice', async () => {
+    const { postTopics } = await import('./topics')
+    const t = postTopics(dataset, idx, asOf)
+    expect(t.length).toBeGreaterThanOrEqual(2)
+    expect(t.length).toBeLessThanOrEqual(4)
+    expect(t.some((x) => x.id === 'vaccine-due')).toBe(true)
+  })
+
+  it('writes sample answers and a weekly summary from real numbers', async () => {
+    const { askSamples, weeklySummarySample } = await import('./aiSamples')
+    const qa = askSamples(dataset, idx, settings, asOf)
+    expect(qa.length).toBeGreaterThanOrEqual(2)
+    expect(qa[0].a).toMatch(/\d+ new patients/)
+    expect(weeklySummarySample(dataset, idx, settings, asOf, lists, insights(dataset, idx, settings, asOf, lists))).toMatch(/patient visits/)
+  })
+
+  it('keeps sample posts within the NMC rules', async () => {
+    const { samplePosts } = await import('../content/samples')
+    // Only what gets published: slides, caption and hashtags.
+    const text = JSON.stringify(samplePosts('Clinic', '10 to 1').map((p) => [p.slides, p.caption, p.hashtags])).toLowerCase()
+    for (const banned of ['best ', 'guarantee', 'discount', '% off', 'offer', 'testimonial', 'cure'])
+      expect(text, banned).not.toContain(banned)
+  })
+})

@@ -34,7 +34,7 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 
 | Decision | What we chose | Why |
 | --- | --- | --- |
-| Domain | Small healthcare clinics | Committed real user (Parth's father) with real data. Set aside: token-optimization middleware (needs a CS advisor), content creation tools for the doctor's YouTube and Instagram (overlaps with a family member's startup; NMC rules treat promotional and AI-generated content as advertising), personal finance (crowded market) |
+| Domain | Small healthcare clinics | Committed real user (Parth's father) with real data. Set aside: token-optimization middleware (needs a CS advisor), personal finance (crowded market). Content creation was set aside earlier (overlap with a family member's startup; NMC) and brought back on 25 Nov as a later AI feature limited to health education and clinic notices |
 | First focus | Clinic's business side, not a patient-facing app | Smaller build, one clear user. Parent app is a possible later extension |
 | Core problem | Doctors forced to think like business owners | Discovery with Parth's father |
 | Order of work | Business thinking first, tech second | Start from what an MBA or entrepreneur would analyze; build only what serves those insights |
@@ -118,6 +118,8 @@ Built on the first clinic's exact data fields; synthetic data in the same column
 5. **Target pacing:** month to date against the doctor's own targets, with projected month end.
 6. **Session and seasonal load:** morning vs evening, weekday and month.
 
+AI features are shown as **"Coming soon" cards with a "See a sample" view** (no API credits yet): post and carousel writer (Posts tab; health education and clinic notices only, per NMC), Ask about your clinic, weekly WhatsApp summary, register photo reading. Samples for Ask and the weekly summary are built from the clinic's own numbers by fixed rules. The Posts tab's "What to post this month" topics already work (rules, no AI). Light, dark and auto themes.
+
 No server and no AI calls in the MVP. Not in the MVP: review QR and review nudges (dropped, NMC), recommend links, register photo reading, check-in QR, WhatsApp sending (no phone field), AI summaries and Ask (next semester).
 
 New patients (the survey's top pain, 48%): the app reads an optional Source column (a word or one letter: G, W, R, L, O), falls back to the first visit's remark, and tells new patients from old ones by case number. More ideas (referrer names, locality, Google Business Profile numbers) in `docs/prototype-spec.md`. Needs the clinic to start filling the column; until then old data gives remarks only.
@@ -172,7 +174,8 @@ Resolved: work split (done together; Garvit's part is his IP), tech stack (Vite 
 - **Nothing clinic-specific in code.** Service names, the membership program, vaccine schedule, targets and thresholds come from Settings.
 - **Don't resolve open decisions on your own.** Build so either answer is easy to switch to.
 - **This repo is public.** Never commit patient data or the clinic's real numbers. Real files go in `data/`, which is git-ignored. `docs/clinic-data/` holds field names only. Survey responses in `research/` are anonymous and fine.
-- **No patient solicitation features.** NMC rules bar doctors from requesting reviews or testimonials for promotion and from soliciting patients. Check before adding anything that touches reviews, referrals or marketing.
+- **No patient solicitation features.** NMC rules bar doctors from requesting reviews or testimonials for promotion and from soliciting patients. Check before adding anything that touches reviews, referrals or marketing. Posts are health education and neutral clinic notices only: no offers, testimonials, "best" or "guaranteed" claims; every post says it is for information only and the doctor approves it.
+- **AI features without credits:** show a "Coming soon" card that says what the feature will do, with a "See a sample" view of realistic output.
 - **Log decisions** in `docs/decisions.md` with date and reason.
 - **Branches:** work on your own branch, merge through pull requests, keep commits small.
 - **Writing style:** only what's necessary. No filler, no em dashes, nothing that reads as AI-written.

@@ -7,7 +7,7 @@ import { generateSample } from '../sample/generate'
 import { sampleWorkbooks } from '../sample/workbook'
 import { useApp } from '../store'
 import type { Settings, Targets } from '../types'
-import { Card, Icon } from '../ui'
+import { Card, ComingSoon, Icon } from '../ui'
 
 const KIND_LABEL = { visits: 'Visit log', memberships: 'AP table', vaccines: 'Vaccine table' } as const
 
@@ -73,6 +73,19 @@ export function DataScreen() {
 
       {report && <ImportResult report={report} />}
 
+      <ComingSoon
+        title="Read register photos"
+        description="For clinics on paper (68% of surveyed doctors): photograph a register page and the rows land in the visit log."
+        points={[
+          'Reads handwriting in English and Hindi, including the one-letter Source code',
+          'Highlights entries it is unsure about for a quick check',
+          'Old registers can be photographed once, so trends work from day one',
+          'Photos are deleted after reading; names stay on the device',
+        ]}
+        sampleTitle="Register photo to visit log"
+        sample={<RegisterSample />}
+      />
+
       <SettingsForm key={JSON.stringify(settings)} settings={settings} onSave={saveSettings} />
     </div>
   )
@@ -136,6 +149,10 @@ function SettingsForm({ settings, onSave }: { settings: Settings; onSave: (s: Se
           <span className="text-ink-2">Clinic name</span>
           <input className={field} value={s.clinicName} onChange={(e) => setS({ ...s, clinicName: e.target.value })} />
         </label>
+        <label className="block">
+          <span className="text-ink-2">Clinic timings (shown on posts)</span>
+          <input className={field} value={s.clinicTimings} onChange={(e) => setS({ ...s, clinicTimings: e.target.value })} />
+        </label>
 
         <label className="flex items-center justify-between gap-4 rounded-xl bg-surface-2 p-3">
           <span>
@@ -176,5 +193,50 @@ function SettingsForm({ settings, onSave }: { settings: Settings; onSave: (s: Se
         </div>
       </div>
     </Card>
+  )
+}
+
+/** A made-up register page and what the reader would extract from it. */
+function RegisterSample() {
+  const rows = [
+    ['24/11', 'M', 'Aarav Sharma', '3412', 'OPD', 'fever', '600', 'Cash', 'W'],
+    ['', 'M', 'Kiara Jain', '3413', 'Vac', 'MMR 1, Typhoid', '2,400', 'UPI', 'G'],
+    ['', 'E', 'Ishaan Gupta', '2987', 'OPD', 'cough f/u', '0', '', ''],
+    ['', 'E', 'Myra Kapoor', '3414', 'OPD', 'ref Dr. Mehta', '600', 'UPI', 'R'],
+  ]
+  const unsure = new Set(['2-3'])
+  return (
+    <div className="space-y-4">
+      <div>
+        <div className="mb-1.5 text-[13px] font-medium text-ink">1. Photo of the register page</div>
+        <div className="overflow-x-auto rounded-xl p-4 shadow-inner" style={{ background: '#fbf6e9', backgroundImage: 'repeating-linear-gradient(transparent, transparent 27px, #c9d6e8 28px)', color: '#1d2a6b', fontFamily: '"Bradley Hand", "Segoe Print", "Comic Sans MS", cursive' }}>
+          {rows.map((r, i) => (
+            <div key={i} className="flex h-7 items-end gap-3 whitespace-nowrap text-[15px]">
+              {r.filter(Boolean).map((c, j) => <span key={j}>{c}</span>)}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <div className="mb-1.5 text-[13px] font-medium text-ink">2. What the reader extracts</div>
+        <div className="overflow-x-auto">
+          <table className="tabular w-full text-left text-[12.5px]">
+            <thead>
+              <tr className="text-muted">{['Date', 'Session', 'Name', 'Case No.', 'Service', 'Detail', 'Amount', 'Mode', 'Source'].map((h) => <th key={h} className="py-1 pr-3 font-normal">{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr key={i} className="border-t border-line">
+                  {['24/11/2026', r[1] === 'M' ? 'Mopd' : 'Eopd', r[2], r[3], r[4] === 'Vac' ? 'Vaccine' : 'OPD', r[5], r[6], r[7] || '-', ({ W: 'Word of mouth', G: 'Google', R: 'Doctor referral' } as Record<string, string>)[r[8]] ?? '-'].map((c, j) => (
+                    <td key={j} className="py-1.5 pr-3 text-ink-2" style={unsure.has(`${i}-${j}`) ? { background: 'color-mix(in srgb, var(--warning) 25%, transparent)', color: 'var(--ink)' } : undefined}>{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-2 text-[12px] text-ink-2">Highlighted: the reader wasn't sure of this case number (2987 or 2981), so it asks before saving. Dates written once per day are carried down.</p>
+      </div>
+    </div>
   )
 }
