@@ -1,5 +1,7 @@
 # App: Clinic Co-Pilot
 
+**Live: https://clinic-copilot-six.vercel.app** (sample data only; open it on a phone and install it).
+
 The MVP from `docs/prototype-spec.md` (read that first: the clinic's fields, features F1 to F6, build plan). A web app that runs entirely in the browser: no server, no AI calls, no data leaves the device. Demo at the poster presentation on 9 Dec 2026.
 
 No real clinic data in this folder or anywhere in the repo (it's public). Real files stay in git-ignored `data/` and are only opened on the clinic's computer.
@@ -38,7 +40,17 @@ npm run build            # production build in dist/
 npm run sample           # write the sample clinic's sheets to app/sample-data/
 ```
 
-Installing to the home screen needs https, so it works once the app is deployed (Vercel or similar), not over local Wi-Fi.
+Installing to the home screen needs https, so use the live link, not local Wi-Fi.
+
+## Deploy
+
+Hosted on Vercel (project `clinic-copilot`, iamgarvit's account). Not yet linked to GitHub, so redeploy by hand from `app/web`:
+
+```bash
+npx vercel deploy --prod
+```
+
+To deploy on every push to main: install the Vercel GitHub app on this repo (the repo owner has to approve it), then run `npx vercel git connect` and set the project's Root Directory to `app/web`.
 
 ## Screens
 
