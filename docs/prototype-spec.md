@@ -141,9 +141,32 @@ Everything here is a monthly roll-up of the daily sheet, so the app calculates i
 ### What the clinic does not record
 
 - **Phone number:** needed before any WhatsApp reminder. Until then, call lists are for the receptionist to phone from the clinic's own records.
-- **How a new patient found the clinic:** this is the survey's top pain (getting new patients, 48%; "where new patients come from" 53% in Q17), and the MVP can't address it without the data. Proposal: one optional "Source" column for new case numbers, added during the pilot.
+- **How a new patient found the clinic:** this is the survey's top pain (getting new patients, 48%; "where new patients come from" 53% in Q17). The MVP reads an optional "Source" column; see the next section.
 - **Date of birth for non-members:** only the AP table has DOB. Not needed for the MVP, since the vaccine table stores due dates.
 - **Family link:** siblings have separate case numbers and nothing connects them, so every feature works per child.
+
+## New patients: ways to capture the source
+
+Getting new patients is the survey's top pain (48%), and the clinic doesn't record where they come from. NMC rules (Oct 2026) rule out soliciting reviews or patients, so everything here **measures** where patients come from; none of it asks patients to promote the clinic.
+
+**Built (25 Nov):**
+
+1. **Optional Source column** in the visit log, filled for new patients only: a word, or one letter (G Google, W word of mouth, R doctor referral, L walk-in, O other). One letter keeps it under a second per new patient. Words and letters are matched through Settings.
+2. **Remark fallback:** if Source is blank, the first visit's remark is read for words like "ref Dr.", "Google", "friend". Works on old data with no Source column.
+3. **New vs old patients by case number:** when the data starts, every long-standing patient's first row looks new. If case numbers are issued in order, a new patient's number is higher than any seen before. Without that, the first 3 months are left out of new-patient counts.
+4. **First-visit reason as a proxy:** share of new patients whose first visit was for an illness or a vaccine. Newborns starting vaccines usually come through a birth hospital or obstetrician; illness-first patients more often through proximity or Google.
+5. **"What changed" check:** each source's last 60 days against its usual pace, flagged only when the change is bigger than normal ups and downs.
+
+**Ideas, not built (to discuss):**
+
+| Idea | What it gives | Effort for the clinic |
+| --- | --- | --- |
+| **Referrer names from remarks** ("Ref Dr. Mehta", "Ref Rainbow Hospital") | Which doctors and hospitals send patients, and whether that's falling. A referral network is the advisor's "network" point | None: already written in remarks |
+| **Source in the AP table** | Where the highest-value patients come from, not just the most | One column, only at AP purchase |
+| **Locality or pin code at first visit** | Map of where patients live; which areas walk-ins come from; where a health camp would reach new families (advisor: local demographics) | One short column for new patients |
+| **Google Business Profile numbers** (calls, direction requests, profile views, from the profile's own Performance page) | Whether the Google drop is fewer people finding the clinic or fewer choosing it. Information only; nothing asks for reviews | 2 minutes a month to copy three numbers into Settings; later possibly automatic |
+| **Family link** (new case number with the same surname and phone as an existing patient) | Siblings of existing patients counted as loyalty, not a new source | Needs a phone field first |
+| **Monthly new-patient target** | Pacing for new patients like the other targets | None |
 
 ## Data model
 
@@ -337,3 +360,5 @@ The synthetic vaccine table includes due dates, as the clinic's real one does (t
 4. Daily sheet columns **T (Unpaid online opd)** and **W (Online AP)**: online payment or online consult? What exactly are **AP visit 1** and **AP follow-up**?
 5. The **vaccine discount** under AP (a percentage, or per vaccine), for the cross-sell savings.
 6. Are the default thresholds right: 30 days for renewals, 2× usual gap for lapsed, 0 or 1 visits in 6 months for unused AP?
+7. **Are case numbers issued in order** (each new child gets the next number)? The app uses this to tell new patients from old ones.
+8. Would the receptionist write one letter in a **Source** column for new patients (G, W, R, L, O)? And can the doctor share the Google Business Profile's monthly numbers?

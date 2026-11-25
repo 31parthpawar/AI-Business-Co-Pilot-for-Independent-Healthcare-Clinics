@@ -10,6 +10,7 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 - Questionnaire analysed at **66 responses** (target was 25 to 30; the form now shows 67). Full analysis in `research/findings.md`.
 - **The growth tracker is validated** (89% find it useful).
 - **The prototype is now specified** on the first clinic's real record structure: `docs/prototype-spec.md`. Its fields are in `docs/clinic-data/`.
+- **App foundation built (25 Nov)** in `app/web/`: an installable web app (PWA) for Android, iPhone and desktop, data on the device only. Done: import, dashboard, call lists F1 and F2 with outcomes, retention F4, pacing F5, load F6, patient card, new patients by source, sample clinic. To do: summaries B2, export B3, manual form B4, patient value F3, deploy. Status in `app/README.md`.
 - **Current goals:**
   1. Build the MVP for the 9 Dec demo, per `docs/prototype-spec.md`.
   2. Get the open data questions answered by the clinic (end of the spec).
@@ -117,11 +118,11 @@ Built on the first clinic's exact data fields; synthetic data in the same column
 5. **Target pacing:** month to date against the doctor's own targets, with projected month end.
 6. **Session and seasonal load:** morning vs evening, weekday and month.
 
-No server and no AI calls in the MVP. Not in the MVP: review QR and review nudges (dropped, NMC), recommend links, register photo reading, check-in QR, WhatsApp sending (no phone field), patient source (needs a new optional column), AI summaries and Ask (next semester).
+No server and no AI calls in the MVP. Not in the MVP: review QR and review nudges (dropped, NMC), recommend links, register photo reading, check-in QR, WhatsApp sending (no phone field), AI summaries and Ask (next semester).
 
-Known gap: the survey's top pain, getting new patients (48%), isn't addressed yet because the clinic doesn't record how new patients found it. An optional Source column is proposed for the pilot.
+New patients (the survey's top pain, 48%): the app reads an optional Source column (a word or one letter: G, W, R, L, O), falls back to the first visit's remark, and tells new patients from old ones by case number. More ideas (referrer names, locality, Google Business Profile numbers) in `docs/prototype-spec.md`. Needs the clinic to start filling the column; until then old data gives remarks only.
 
-Out of scope this semester: general growth recommendations, live EMR integration, multi-clinic support, benchmarking, mobile app, appointment booking.
+Out of scope this semester: general growth recommendations, live EMR integration, multi-clinic support, benchmarking, a native app-store app (the MVP is an installable web app), appointment booking.
 
 ## Final report (ENT format)
 
