@@ -4,6 +4,15 @@ Newest first. Each entry: date, decision, reason. Add an entry whenever a direct
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 2026-11-25 | Prototype built on the first clinic's exact data fields (visit log, AP table, vaccine table, daily and 12-month summary sheets); generalise after the pilot, with clinic specifics in Settings | Only real data we have; the doctor is committed. Only 11% of surveyed clinics use Excel, so this is the first clinic's answer, not the general one |
+| 2026-11-25 | MVP = base layer (import, automatic summaries, export) plus six features: who to call today, cross-sell to AP, patient value, retention, target pacing, session and seasonal load. Spec: `docs/prototype-spec.md` | Consolidating his sheets alone is what Excel formulas can do; the value is telling him who to act on. Covers advisor's CLV, cross-selling and resource management |
+| 2026-11-25 | Rule-based suggestions are in the MVP, as action lists and pacing tied to the clinic's numbers | Most wanted feature (65%); tell the advisor |
+| 2026-11-25 | Review QR, review drafting, review-count nudges dropped; recommend links dropped for now | NMC Guidelines on Ethical Advertising and Public Communication (in effect 6 Oct 2026) bar doctors from requesting reviews or testimonials for promotion; NMC 2023 rules bar soliciting patients |
+| 2026-11-25 | No server and no AI calls in the MVP; runs in the browser, real data stays on the clinic's computer | Rules are plain logic; no API credits; avoids moving patient names off the device |
+| 2026-11-25 | `docs/demo-plan.md` superseded by `docs/prototype-spec.md` | New direction above |
+| 2026-11-25 | Build plan: core features by 2 Dec, the rest by 7 Dec, real-data run 8 Dec, demo at the poster presentation 9 Dec | Report submitted 25 Nov; demo shows progress since |
+| 2026-11-25 | Team corrected: the BTP is Parth's alone; Garvit works on the same product as his Independent Project. Work done together, no split | Earlier context wrongly said joint BTP |
+| 2026-11-25 | Content creation tool for the doctor's YouTube and Instagram recorded as a considered and set-aside idea | Overlaps with a family member's startup; NMC treats promotional and AI-generated content by doctors as advertising |
 | 2026-11-22 | AI features (register reading, review drafting, Ask, written summary) shown as "Coming soon" in the demo; everything else built fully | No API credits yet; build tier depends on Parth's Claude credits (`app/README.md`) |
 | 2026-11-22 | Current goals set: build the demo app (`docs/demo-plan.md`) and plan next semester (`docs/next-semester-plan.md`) | Survey done; the report needs a demo and a next-semester plan |
 | 2026-11-22 | Advisor's suggestion recorded: sell to chemists and nearby stores rather than doctors. Treated as a hypothesis to test next semester, not adopted | No evidence yet; needs chemist interviews and NMC/DPDP checks |

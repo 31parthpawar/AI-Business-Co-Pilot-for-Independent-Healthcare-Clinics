@@ -12,14 +12,15 @@ This semester answered whether the problem is real (66 doctors, 89% find the too
 
 Run the app at Parth's father's clinic for 6 weeks with real data.
 
-Track:
-- Days with visits entered, and minutes the receptionist spends per day (target: under 2).
-- Share of new patients with a source recorded (target: 80%+).
-- Lapsed patients contacted, and how many came back within 30 days.
-- Vaccine reminders sent, and how many were followed by a visit.
-- How often the doctor opens the app or reads the digest, and which nudges were acted on.
+Track (features as in `docs/prototype-spec.md`):
+- Days the visit log is imported or entered, and time it takes per day.
+- Call lists: patients called from each list, outcomes, and how many visited within 30 days.
+- AP renewal rate during the pilot vs the clinic's previous 12 months.
+- Cross-sell: AP memberships sold to patients from the list.
+- Share of new patients with a source recorded, once the optional Source column is added (target: 80%+).
+- How often the doctor opens the app, and which screens he uses.
 
-Kill or change signals: if entry stops within 2 weeks, the input design is wrong. If the doctor ignores the digest, the push channel is wrong.
+Kill or change signals: if imports or entry stop within 2 weeks, the input design is wrong. If the call lists aren't used, the lists or their delivery are wrong.
 
 ### 2. Who pays (Jan to Feb, in parallel)
 

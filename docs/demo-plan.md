@@ -1,5 +1,7 @@
 # Demo App Plan
 
+> **Superseded on 25 Nov 2026 by `docs/prototype-spec.md`.** Kept for history. The review QR, review drafting and recommend links are dropped (NMC advertising guidelines, Oct 2026); register photo reading, check-in QR and AI features move to later.
+
 **Goal:** a working web app to show Prof. Vajpayee and put in the report (screenshots). Design first; it runs on synthetic data for the demo, and real clinic data comes later.
 
 **Status:** v2 design, pending team approval. Items marked *(open decision)* can be switched on or off, so either answer from the advisor is cheap to adopt.

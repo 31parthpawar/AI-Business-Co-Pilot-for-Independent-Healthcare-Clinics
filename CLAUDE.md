@@ -4,16 +4,16 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 
 **Rule for humans and agents:** if a decision changes, update this file and `docs/decisions.md` in the same commit. Never leave a decision only in a chat.
 
-## Where we stand (as of 22 Nov 2026)
+## Where we stand (as of 25 Nov 2026)
 
-- Semester report due around **24 Nov 2026**. It covers ideation, research, validation and an MVP prototype.
-- Questionnaire closed for analysis at **66 responses** (target was 25 to 30). Full analysis in `research/findings.md`.
-- Met Prof. Vajpayee on 21 Nov to discuss the responses.
-- **The growth monitor is validated** (89% find it useful), but three findings conflict with earlier MVP decisions. These are open until agreed with the advisor (see "Open decisions" below).
+- Semester report submitted 25 Nov 2026. **Poster presentation and prototype demo on 9 Dec 2026.**
+- Questionnaire analysed at **66 responses** (target was 25 to 30; the form now shows 67). Full analysis in `research/findings.md`.
+- **The growth tracker is validated** (89% find it useful).
+- **The prototype is now specified** on the first clinic's real record structure: `docs/prototype-spec.md`. Its fields are in `docs/clinic-data/`.
 - **Current goals:**
-  1. Build the demo app for Prof. Vajpayee and the report, per `docs/demo-plan.md`.
-  2. Set next semester's approach, per `docs/next-semester-plan.md`.
-  3. Settle the open decisions and write the report.
+  1. Build the MVP for the 9 Dec demo, per `docs/prototype-spec.md`.
+  2. Get the open data questions answered by the clinic (end of the spec).
+  3. Next semester's approach, per `docs/next-semester-plan.md`.
 
 ## Project basics
 
@@ -22,7 +22,7 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 | Registered title | AI Business Co-Pilot for Independent Healthcare Clinics |
 | Registered description | Independent clinic owners in India are domain experts forced to double as business owners, managing revenue, retention and growth with disconnected tools and no real business intelligence. This project builds a context-aware AI business co-pilot for small clinics that surfaces key metrics and insights through a natural language interface, enabling doctors to make informed business decisions without stepping outside their clinician role. |
 | Track | Entrepreneurship (ENT) BTP. Credits count towards Parth's Entrepreneurship minor |
-| Team | Joint BTP: Parth Pawar and Garvit (both B.Tech, IIIT Delhi). The report must state how work is divided |
+| Team | Parth Pawar (BTP) and Garvit (Independent Project, IP), both B.Tech, IIIT Delhi, working together on the same product. The BTP is Parth's alone; Garvit's work is his IP |
 | Advisor | Prof. Pankaj Vajpayee, Professor of Practice and Director & CEO of IIITD Innovation & Incubation Center (IIITD-IC) |
 | Duration | 2 semesters: Monsoon 2026 (ends with this report) and Winter 2027 |
 | Target user | Small specialist clinics in the service industry, practicing for 5+ years |
@@ -33,14 +33,15 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 
 | Decision | What we chose | Why |
 | --- | --- | --- |
-| Domain | Small healthcare clinics | Committed real user (Parth's father) with real data. Set aside: token-optimization middleware (needs a CS advisor), content creation tools (overlaps with a family member's startup), personal finance (crowded market) |
+| Domain | Small healthcare clinics | Committed real user (Parth's father) with real data. Set aside: token-optimization middleware (needs a CS advisor), content creation tools for the doctor's YouTube and Instagram (overlaps with a family member's startup; NMC rules treat promotional and AI-generated content as advertising), personal finance (crowded market) |
 | First focus | Clinic's business side, not a patient-facing app | Smaller build, one clear user. Parent app is a possible later extension |
 | Core problem | Doctors forced to think like business owners | Discovery with Parth's father |
 | Order of work | Business thinking first, tech second | Start from what an MBA or entrepreneur would analyze; build only what serves those insights |
 | Target segment | Small specialist clinics, 5+ years of practice | Enough history to see trends. Agreed with advisor |
 | Data | Patient and visit data first, finances optional | Advisor: payments mostly cash, doctors won't share finances. Survey partly confirms: 39% would add earnings vs 64% appointments |
-| Validation | Questionnaire as main source | Done: 66 responses |
-| MVP scope | Describe changes, don't prescribe fixes | **Under review**: suggestions were the most wanted feature (65%) |
+| Validation | Questionnaire as main source, after informal conversations with doctors in Parth's father's network | Done: 66 responses |
+| MVP scope | Action lists and rule-based insights on the clinic's own records, no general growth advice | Suggestions were the most wanted feature (65%); describing changes alone is something Excel already does |
+| Starting point | Build on the first clinic's exact data fields; generalise after the pilot | Only real data we have. Settings keep it clinic-agnostic |
 
 ## The problem
 
@@ -48,8 +49,8 @@ Clinic owners are doctors first, but growing the clinic forces them to think lik
 
 Our first clinic is **one example**, not proof that every clinic works the same way:
 
-- **Services:** consultations (booked and walk-in), vaccinations, and an annual health program (yearly membership: free consultations, discounted vaccines, other benefits).
-- **Records:** Excel for most data including the annual program; Axon EMR for vaccines; appointments booked by phone and written in a paper diary.
+- **Services:** consultations (booked and walk-in), vaccinations, and an annual health program (AP: yearly membership with free consultations, discounted vaccines, other benefits).
+- **Records:** Excel for most data including the annual program; Axon EMR for vaccines; appointments booked by phone and written in a paper diary. Patients are tracked by case number. Five hand-filled tables: a visit log, an AP table, a vaccine table, a daily summary sheet (two sessions a day) and a 12-month summary with monthly targets. The summary sheets restate the visit log: 20 of 26 daily columns can be calculated. Details: `docs/prototype-spec.md`.
 - **Staff:** a receptionist handles appointments, patient messages and admin.
 - **Business decisions:** the doctor reviews data himself and uses ChatGPT and Claude. The survey shows this is unusual: 79% of doctors have never used AI tools for business decisions.
 
@@ -90,33 +91,35 @@ His suggestion (Nov 2026, after the survey): sell the product to chemists and ne
 
 ## Proposed solution
 
-A growth monitor that tracks a clinic's key metrics from patient and visit data and shows clearly what is changing.
+A business co-pilot that works on the clinic's own records and tells the doctor **who to act on and what is working**. Excel counts what happened; EMRs record visits; neither says what to do next.
 
-What the survey suggests changing (pending advisor agreement):
+How the idea evolved:
 
-| Area | Earlier plan | What the data suggests |
+| Stage | Idea | What changed it |
 | --- | --- | --- |
-| Positioning | Better than generic AI tools | The competitor is gut feel and a paper register. "Your clinic's numbers, finally visible" |
-| Lead problem | Visibility into business metrics | Getting new patients first; lapsed patients as the hidden second problem |
-| Suggestions | Deferred past the MVP | Add a few rule-based nudges tied to specific metrics, no general growth advice |
-| Data input | Excel upload | Snap the paper register (AI reads it), backfill past registers, plus EMR or Excel import |
-| Retention | One of several metrics | Health-due reminders (vaccines, tests, growth checks) in the clinic's name, not "come back" messages, since people visit only when ill |
-| Patient source | One of several metrics | Source letter in the register, patient self check-in QR, tagged recommend links |
-| Getting found | Not planned | Review QR with optional AI help that sends patients to Google, Practo or Justdial; shareable recommend card |
-| Earnings | Optional | Keep optional, offer it openly |
+| Registered | AI co-pilot with a natural-language interface | Advisor: research before building |
+| Growth monitor | Track metrics, describe changes, don't prescribe fixes | Survey: suggestions most wanted (65%), paper is the main record (68%) |
+| v2 demo plan (`docs/demo-plan.md`) | Register photo reading, review QR, health-due reminders, recommend links | NMC advertising guidelines (Oct 2026) bar requesting reviews; the first clinic's real data was available |
+| **Current MVP** (`docs/prototype-spec.md`) | Import the clinic's sheets, calculate its summaries, plus six action features | |
 
 ## MVP prototype
 
-Working prototype on synthetic data modeled on the first clinic, then its real (anonymized) data. Full design, screens, nudge rules and demo script: `docs/demo-plan.md`.
+Built on the first clinic's exact data fields; synthetic data in the same columns for the demo, real data only on the clinic's computer. Full spec: `docs/prototype-spec.md`.
 
-**Metrics, from Q17 top picks:** where new patients come from, which patients stopped coming, monthly visit trends, which marketing is working, services used most. Comparison with similar clinics and busy months can wait.
+**Base layer:** import the visit log, AP table and vaccine table from Excel; calculate the daily and 12-month summaries (20 of 26 daily columns); a small form for the 6 manual items; export back in the clinic's layout.
 
-Four parts (v2 design, pending approval):
+**Six features:**
 
-1. **Capture:** snap the paper register (AI reads handwriting into a table), backfill old registers, patient self check-in QR, file import. Names replaced by IDs. No financial data needed.
-2. **Stay in touch:** health-due reminders set by the doctor (vaccines, tests, growth checks, renewals), seasonal advisories, vaccine stock forecast.
-3. **Get found:** review QR with optional AI drafting and one-tap copy to Google, Practo or Justdial (no review gating); tagged recommend links to measure word of mouth.
-4. **Understand:** weekly WhatsApp summary, rule-based nudges (pending advisor, behind a toggle), "Ask about your clinic", trends. Optional earnings view.
+1. **Who to call today:** AP renewals (ranked by use), overdue vaccines, lapsed regulars, AP members not using it; each with a reason and an outcome button.
+2. **Cross-sell to AP:** non-members whose spend would have been covered by AP.
+3. **Patient value:** 12-month value by first service; AP renewal rate by renewal count.
+4. **Retention:** share of each month's new patients who return within 3 and 6 months.
+5. **Target pacing:** month to date against the doctor's own targets, with projected month end.
+6. **Session and seasonal load:** morning vs evening, weekday and month.
+
+No server and no AI calls in the MVP. Not in the MVP: review QR and review nudges (dropped, NMC), recommend links, register photo reading, check-in QR, WhatsApp sending (no phone field), patient source (needs a new optional column), AI summaries and Ask (next semester).
+
+Known gap: the survey's top pain, getting new patients (48%), isn't addressed yet because the clinic doesn't record how new patients found it. An optional Source column is proposed for the pilot.
 
 Out of scope this semester: general growth recommendations, live EMR integration, multi-clinic support, benchmarking, mobile app, appointment booking.
 
@@ -129,7 +132,7 @@ Out of scope this semester: general growth recommendations, live EMR integration
 | Design, architecture, implementation | MVP flow, metrics chosen and why, screenshots, Dad's feedback |
 | Business plan (appendix) | Target segment, pricing (Q19), data-sharing comfort (Q18), path to other specialties |
 
-End with next semester's plan. BTP rules: institute LaTeX template with "Entrepreneurship" on the title page; poster presentation; joint BTP states work division, both present (up to 1 hour), evaluated individually; committee of three, advisor's grade double-weighted on disagreement; second semester opens with a review of this one.
+End with next semester's plan. BTP rules: institute LaTeX template with "Entrepreneurship" on the title page; poster presentation; single BTP (Garvit's IP is separate), poster up to 30 minutes; committee of three, advisor's grade double-weighted on disagreement; second semester opens with a review of this one.
 
 ## Next semester (Winter 2027)
 
@@ -144,30 +147,32 @@ Full plan: `docs/next-semester-plan.md`. Goal: move from "doctors say they want 
 
 ## Open decisions (take to Prof. Vajpayee)
 
-- [ ] Add simple rule-based suggestions to the MVP?
-- [ ] Lead the product with patient acquisition?
-- [ ] How does data get in: receptionist entry, EMR export, or both?
+- [x] ~~Add simple rule-based suggestions to the MVP?~~ Decided 25 Nov: yes, as action lists and target pacing tied to the clinic's own numbers. Tell the advisor.
+- [ ] Lead the product with patient acquisition? The MVP leads with renewals, retention and pacing because the clinic's data has no patient source. Acquisition comes with the proposed Source column.
+- [x] ~~How does data get in?~~ For the first clinic: import its existing Excel sheets. For other clinics (68% paper, 42% EMR): still open.
 - [ ] Is the sample good enough, or widen it next semester?
 - [ ] Appointments and reminders: next semester, or a separate product?
 - [ ] Who pays: doctors, or chemists and nearby stores (his suggestion)? Plan is to test both next semester.
 
 ## Open questions
 
-- [ ] Work split between Parth and Garvit (state in report).
-- [ ] MVP tech stack. Proposed: Vite + React + TypeScript, client-side only, static deploy (see `app/README.md`).
-- [ ] Where to get API credits for the AI features. None for now: AI features show as "Coming soon" cards that describe what they will do.
-- [ ] What exactly is in the clinic's Excel files; can visit-level data be exported from Axon EMR?
-- [ ] Privacy: names removed before data leaves the clinic; keep India's DPDP Act in mind.
+- [ ] The clinic's data questions at the end of `docs/prototype-spec.md` (AP and vaccine table headers, Service values, AP price, case numbers). These block the importer.
+- [ ] Where to get API credits for the AI features next semester. Not needed for the MVP.
+- [ ] Privacy: real data stays on the clinic's computer; DPDP Act consent before any patient messaging.
+
+Resolved: work split (done together; Garvit's part is his IP), tech stack (Vite + React + TypeScript, browser only, see `docs/prototype-spec.md`), contents of the clinic's Excel files (`docs/clinic-data/`).
 
 ## Working rules for agents
 
 - **This file is the source of truth.** If a suggestion conflicts with a decision here or in `docs/decisions.md`, flag it rather than silently changing direction.
 - **Business thinking leads, tech follows.** The advisor evaluates the business case, not the code.
 - **Cite the survey.** Claims about "doctors" need a number from `research/findings.md`. Don't generalize from one clinic.
-- **No finance dependency.** Everything must work on patient and visit data alone.
+- **No finance dependency.** Every feature must work on visit data alone; money figures are optional (earnings switch in Settings).
+- **Nothing clinic-specific in code.** Service names, the membership program, vaccine schedule, targets and thresholds come from Settings.
 - **Don't resolve open decisions on your own.** Build so either answer is easy to switch to.
-- **Never commit patient data.** Real clinic files go in `data/`, which is git-ignored. Survey responses in `research/` are anonymous and fine.
+- **This repo is public.** Never commit patient data or the clinic's real numbers. Real files go in `data/`, which is git-ignored. `docs/clinic-data/` holds field names only. Survey responses in `research/` are anonymous and fine.
+- **No patient solicitation features.** NMC rules bar doctors from requesting reviews or testimonials for promotion and from soliciting patients. Check before adding anything that touches reviews, referrals or marketing.
 - **Log decisions** in `docs/decisions.md` with date and reason.
 - **Branches:** work on your own branch, merge through pull requests, keep commits small.
 - **Writing style:** only what's necessary. No filler, no em dashes, nothing that reads as AI-written.
-- **Deadline first:** everything this week serves the report due around 24 Nov 2026.
+- **Deadline first:** everything until 9 Dec serves the prototype demo.
