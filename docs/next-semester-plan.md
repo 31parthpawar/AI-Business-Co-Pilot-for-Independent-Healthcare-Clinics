@@ -8,9 +8,9 @@ This semester answered whether the problem is real (66 doctors, 89% find the too
 
 ## Workstreams
 
-### 1. Pilot at the first clinic (Jan to Feb)
+### 1. Pilot at the first clinic (from January)
 
-Run the app at Parth's father's clinic for 6 weeks with real data.
+The first functional prototype is ready by end of December 2026. Run it at Parth's father's clinic with real data for 4 to 6 weeks from January (tentative; can run longer). Change the product based on what the pilot and the doctor's feedback show.
 
 Track (features as in `docs/prototype-spec.md`):
 - Days the visit log is imported or entered, and time it takes per day.
@@ -44,9 +44,9 @@ To test it:
 
 Decide by end of February which model the business plan leads with.
 
-### 3. Pilot expansion (March)
+### 3. Pilot expansion (after the first pilot)
 
-Bring in 3 to 5 more clinics that match the likely-buyer profile: 10 to 20 years in practice, EMR users, 20+ patients a day. Include at least one non-pediatric clinic. Test real willingness to pay: ask for a paid commitment or a deposit after 4 weeks, not a survey answer.
+Test the next version with a few more clinics. Then decide the direction from the results. Bring in 3 to 5 more clinics that match the likely-buyer profile: 10 to 20 years in practice, EMR users, 20+ patients a day. Include at least one non-pediatric clinic. Test real willingness to pay: ask for a paid commitment or a deposit after 4 weeks, not a survey answer.
 
 ### 4. Wider validation (Feb to March)
 
