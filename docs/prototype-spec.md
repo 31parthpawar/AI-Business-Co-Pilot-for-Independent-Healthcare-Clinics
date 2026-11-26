@@ -1,6 +1,6 @@
 # Prototype Spec: Clinic Co-Pilot MVP
 
-**Status:** agreed 25 Nov 2026. Demo at the poster presentation on **9 Dec 2026**.
+**Status:** agreed 25 Nov 2026. Progress demo at the poster presentation on **9 Dec 2026**. **First functional prototype by end of December 2026**, ready for the pilot at the clinic from January (4 to 6 weeks).
 
 **Replaces** `docs/demo-plan.md` as the plan for what we build now. The demo plan stays for history; its lead features (register photo reading, review QR, recommend links, check-in QR, AI features) are dropped or moved to later (see "Not in the MVP").
 
@@ -315,7 +315,7 @@ The synthetic vaccine table includes due dates, as the clinic's real one does (t
 - Real data stays on the clinic's computer, in the browser.
 - Before any messaging to patients: consent under the DPDP Act.
 
-## Build plan to 9 Dec
+## Build plan
 
 | Dates | Work | Priority |
 | --- | --- | --- |
@@ -324,7 +324,9 @@ The synthetic vaccine table includes due dates, as the clinic's real one does (t
 | 3 to 5 Dec | Cross-sell F2, retention F4, daily summary and manual form (B2, B4) | Should |
 | 6 to 7 Dec | Patient value F3, load F6, export B3, Settings screen | Nice to have |
 | 8 Dec | Run on the clinic's real data (on its computer), doctor's feedback, fixes | Must |
-| 9 Dec | Demo at the poster presentation | |
+| 9 Dec | Progress demo at the poster presentation | |
+| 10 to 31 Dec | Finish remaining features, fixes from the demo and the doctor's feedback: **first functional prototype** | Must |
+| Jan 2027 | Pilot at the clinic starts, 4 to 6 weeks (tentative) | |
 
 **Done for the demo:** import synthetic files, see the daily summary, Today screen with pacing, all four call lists with outcomes, patient card, and at least cross-sell and retention.
 
@@ -336,7 +338,7 @@ The synthetic vaccine table includes due dates, as the clinic's real one does (t
 4. Open that patient's card: visits, spend, AP history, vaccines due.
 5. Cross-sell: a family that would have saved ₹X with AP.
 6. Insights: how many new patients come back.
-7. Close: next is a 6-week pilot at the clinic.
+7. Close: functional prototype by end of December, then a 4 to 6 week pilot at the clinic from January.
 
 ## Answered by the clinic (25 Nov)
 

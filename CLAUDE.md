@@ -6,7 +6,7 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 
 ## Where we stand (as of 25 Nov 2026)
 
-- Semester report submitted 25 Nov 2026. **Poster presentation and prototype demo on 9 Dec 2026.**
+- Semester report submitted 25 Nov 2026. **Poster presentation with a progress demo on 9 Dec 2026. First functional prototype by end of December; pilot at the clinic from January, 4 to 6 weeks (tentative).**
 - Questionnaire analysed at **66 responses** (target was 25 to 30; the form now shows 67). Full analysis in `research/findings.md`.
 - **The growth tracker is validated** (89% find it useful).
 - **The prototype is now specified** on the first clinic's real record structure: `docs/prototype-spec.md`. Its fields are in `docs/clinic-data/`.
@@ -141,9 +141,9 @@ End with next semester's plan. BTP rules: institute LaTeX template with "Entrepr
 
 Full plan: `docs/next-semester-plan.md`. Goal: move from "doctors say they want it" to "a clinic uses it every week, and we know who pays".
 
-1. 6-week pilot at the first clinic with usage metrics (Jan to Feb).
+1. Pilot at the first clinic from January, 4 to 6 weeks (tentative), with usage metrics; change the product from its feedback.
 2. Who pays: doctor subscription vs chemist or nearby store (advisor's suggestion) vs clinic pharmacy. Chemist and doctor interviews; NMC and DPDP checks (Jan to Feb).
-3. 3 to 5 more clinics matching the likely-buyer profile, with a paid commitment test (March).
+3. Test the next version with a few more clinics matching the likely-buyer profile, with a paid commitment test; then decide the direction.
 4. Survey v2: location question, enforced pick limits, more specialties.
 5. Product features chosen by the pilot: WhatsApp reminders, EMR import, appointments (in or out), alerts, revenue estimate, benchmarking.
 6. Business plan and IIITD-IC pitch (March to April).
@@ -179,4 +179,4 @@ Resolved: work split (done together; Garvit's part is his IP), tech stack (Vite 
 - **Log decisions** in `docs/decisions.md` with date and reason.
 - **Branches:** work on your own branch, merge through pull requests, keep commits small.
 - **Writing style:** only what's necessary. No filler, no em dashes, nothing that reads as AI-written.
-- **Deadline first:** everything until 9 Dec serves the prototype demo.
+- **Deadlines:** progress demo on 9 Dec; first functional prototype by end of December; pilot from January.
