@@ -4,15 +4,15 @@ The validation survey as it ran on Google Forms (title: "Clinic Growth Questionn
 
 The live form has **no location question**. An earlier draft added one (broad Delhi NCR zones); it should be added if the survey is run again next semester.
 
-## Intro text (final draft)
+## Intro text (as on the live form)
 
 Dear Doctor,
 
-We are final-year B.Tech students at the Indraprastha Institute of Information Technology Delhi (IIIT Delhi), conducting a research study under the supervision of Prof. Pankaj Vajpayee, Director and CEO of the IIIT Delhi Innovation & Incubation Center.
+We are a team of B.Tech researchers from IIIT Delhi developing a real-time analytics solution designed to help independent clinics accelerate their financial and operational growth.
 
-Independent practitioners carry the responsibility of running a business alongside their clinical work, often without dedicated time, tools or support. This study aims to understand how small clinics manage their operations and pursue growth, and to inform the development of a solution that supports clinic owners in these decisions. Your insights as a practising doctor are central to this work.
+We are currently mapping the most common hidden bottlenecks that slow down private practice growth. The survey takes approximately 3 minutes minutes to share your operational pain points in the brief survey below. We would love to share our final growth-strategy report with you, offering data-driven insights into how top clinics are optimizing their practice.
 
-The survey takes approximately 3 minutes and does not request any patient information or financial figures. All responses are anonymous, kept confidential, and used solely for academic research. A summary of the findings will be shared with participating doctors on request.
+The survey does not request any patient information or financial figures. All responses are anonymous, kept confidential, and used solely for academic research.
 
 For any queries, please contact Parth Pawar at parth23372@iiitd.ac.in.
 

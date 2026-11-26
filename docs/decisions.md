@@ -4,6 +4,7 @@ Newest first. Each entry: date, decision, reason. Add an entry whenever a direct
 
 | Date | Decision | Reason |
 | --- | --- | --- |
+| 2026-11-26 | Corrected: Prof. Vajpayee is Director of IIITD-IC (not CEO). `docs/questionnaire.md` intro replaced with the text that ran on the live form | Facts confirmed by Parth |
 | 2026-11-26 | Timeline: progress demo at the poster presentation 9 Dec; first functional prototype by end of December 2026; pilot at the first clinic from January for 4 to 6 weeks (tentative, can run longer); then changes from its feedback, then a few more clinics test the next version, then decide the direction | Set by Parth; the pilot needs a complete, stable prototype |
 | 2026-11-25 | Posts tab added: AI post and carousel writer as "Coming soon" with sample posts; topic ideas from the clinic's data work now. Health education plus neutral clinic notices (timings, vaccination mornings, closures) only | Marketing is a real need (33% name it a top challenge; 56% do no promotion). NMC guidelines (Oct 2026) allow health education but bar promotion, offers and testimonials. Content creation was set aside earlier for overlapping a family member's startup; Garvit confirmed bringing it back |
 | 2026-11-25 | Every AI feature without API credits shows "Coming soon", what it will do, and "See a sample" | Shows the full product in the demo without spending credits |

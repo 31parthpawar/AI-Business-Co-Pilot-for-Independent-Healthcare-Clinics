@@ -24,7 +24,7 @@ This file is the single source of truth for our BTP. Claude Code reads it automa
 | Registered description | Independent clinic owners in India are domain experts forced to double as business owners, managing revenue, retention and growth with disconnected tools and no real business intelligence. This project builds a context-aware AI business co-pilot for small clinics that surfaces key metrics and insights through a natural language interface, enabling doctors to make informed business decisions without stepping outside their clinician role. |
 | Track | Entrepreneurship (ENT) BTP. Credits count towards Parth's Entrepreneurship minor |
 | Team | Parth Pawar (BTP) and Garvit (Independent Project, IP), both B.Tech, IIIT Delhi, working together on the same product. The BTP is Parth's alone; Garvit's work is his IP |
-| Advisor | Prof. Pankaj Vajpayee, Professor of Practice and Director & CEO of IIITD Innovation & Incubation Center (IIITD-IC) |
+| Advisor | Prof. Pankaj Vajpayee, Professor of Practice and Director of IIITD Innovation & Incubation Center (IIITD-IC) |
 | Duration | 2 semesters: Monsoon 2026 (ends with this report) and Winter 2027 |
 | Target user | Small specialist clinics in the service industry, practicing for 5+ years |
 | First user | Parth's father's pediatric clinic in Delhi, fully committed to using what we build |
